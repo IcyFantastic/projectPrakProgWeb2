@@ -46,17 +46,7 @@ $sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
 </head>
 <body>
 
-<header>
-    <img src="Gambar/Adobe Express - file.png" alt="Logo" class="logo">
-    <h2 class="logonama">InfoLoker</h2>
-    <nav class="navigasi">
-        <a href="dashboard_pelamar.php">Home</a>
-        <a href="#">Tentang</a>
-        <a href="#">Visi & Misi</a>
-        <a href="#">Contact</a>
-        <button class="tombolLogin" onclick="window.location.href='logout.php'">Logout</button>
-    </nav>
-</header>
+<?php include 'partials/header.php'; ?>
 
 <div class="container">
     <nav class="breadcrumb">
@@ -111,9 +101,7 @@ $sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
     <button class="back-btn" onclick="window.location.href='dashboard_pelamar.php'">⬅ Kembali ke Halaman Utama</button>
 </div>
 
-<footer>
-    <p>Hansel Ivano.S - 71231039 | Laurensius Rio Darryl - 71231022</p>
-</footer>
+<?php include 'partials/footer.php'; ?>
 
 </body>
 </html>

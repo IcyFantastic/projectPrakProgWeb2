@@ -76,17 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 
-<header>
-    <img src="Gambar/Adobe Express - file.png" alt="Logo" class="logo">
-    <h2 class="logonama">InfoLoker</h2>
-    <nav class="navigasi">
-        <a href="dashboard_pelamar.php">Home</a>
-        <a href="#">Tentang</a>
-        <a href="#">Visi & Misi</a>
-        <a href="#">Contact</a>
-        <button class="tombolLogin" onclick="window.location.href='logout.php'">Logout</button>
-    </nav>
-</header>
+<?php include 'partials/header.php'; ?>
 
 <section id="apply">
     <nav class="breadcrumb">
@@ -121,9 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 </section>
 
-<footer>
-    <p>Hansel Ivano.S - 71231039 | Laurensius Rio Darryl - 71231022</p>
-</footer>
+<?php include 'partials/footer.php'; ?>
 
 </body>
 </html>
