@@ -1,10 +1,43 @@
+<?php
+session_start();
+require 'koneksi.php';
+
+$error = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $pass = md5($_POST['password']); // cocokkan hash MD5 dari password
+
+    $query = "SELECT * FROM users WHERE email='$email' AND password='$pass'";
+    $result = mysqli_query($conn, $query);
+
+    if (mysqli_num_rows($result) == 1) {
+        $data = mysqli_fetch_assoc($result);
+        $_SESSION['id'] = $data['id'];
+        $_SESSION['email'] = $data['email'];
+        $_SESSION['role'] = $data['role'];
+
+        // Redirect berdasarkan role
+        if ($data['role'] == 'pelamar') {
+            header("Location: dashboard_pelamar.php");
+            exit;
+        } elseif ($data['role'] == 'perusahaan') {
+            header("Location: dashboard_perusahaan.php");
+            exit;
+        }
+    } else {
+        $error = "Login gagal. Cek email atau password.";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="Logindefault.css">
+    <link rel="stylesheet" href="css/Logindefault.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
@@ -30,8 +63,8 @@
     
 
     <div class="wrapper">
-        <form action="../Halaman_Utama/UtamaPerusahaan.html">
-            <h1>Login Perusahaan</h1>
+        <form action="../Halaman_Utama/UtamaPelamar.html">
+            <h1>Login Pelamar</h1>
             <div class="input-box">
                 <input type="text" placeholder="Username" required> 
                 <i class='bx bxs-user'></i>
