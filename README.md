@@ -1,2 +1,3 @@
 # projectPrakProgWeb2
-<h1 stylecolor="red">HANSEL GAY</h1>
+<h1 style="color:blue">HANSEL GAY</h1>
+
