@@ -41,7 +41,7 @@ $result = mysqli_query($conn, $sql);
                 <a href="dashboard_pelamar.php" class="active">Beranda</a>
                 <a href="profile.php">Profil</a>
                 <a href="lamaran_saya.php">Lamaran Saya</a>
-                <a href="..logout.php">Keluar</a>
+                <a href="logout.php">Keluar</a>
             </nav>
         </div>
     </header>
