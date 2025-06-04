@@ -44,7 +44,7 @@ $lowongan = mysqli_query($conn, "
                 <a href="dashboard_perusahaan.php" class="active">Beranda</a>
                 <a href="profile.php">Profil</a>
                 <a href="lowongan_saya.php">Lowongan Saya</a>
-                <a href="logout.php">Keluar</a>
+                <a href="../logout.php">Keluar</a>
             </nav>
         </div>
     </header>
