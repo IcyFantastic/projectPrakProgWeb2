@@ -27,20 +27,21 @@ $result = mysqli_query($conn, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Pelamar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="UtamaPelamar.css">
+    <link rel="stylesheet" href="style.css">
+    <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
 </head>
 <body>
     <header>
         <div class="header-content">
             <div class="logo-section">
-                <div class="logo">JP</div>
-                <span class="logo-text">JobPortal</span>
+                <div class="logo">IL</div>
+                <div class="logo-text">InfoLoker</div>
             </div>
             <nav class="nav-links">
-                <a href="dashboard_pelamar.php">Beranda</a>
+                <a href="dashboard_pelamar.php" class="active">Beranda</a>
                 <a href="profile.php">Profil</a>
                 <a href="lamaran_saya.php">Lamaran Saya</a>
-                <a href="logout.php">Keluar</a>
+                <a href="..logout.php">Keluar</a>
             </nav>
         </div>
     </header>
@@ -52,59 +53,64 @@ $result = mysqli_query($conn, $sql);
                 <p class="search-subtitle">Jelajahi ribuan lowongan kerja sesuai dengan keahlianmu</p>
                 <form method="GET" action="" class="search-form">
                     <div class="search-input-group">
-                        <i class="fas fa-search input-icon"></i>
                         <input type="text" name="search" 
                                placeholder="Cari berdasarkan posisi, perusahaan, atau lokasi" 
                                value="<?= htmlspecialchars($search) ?>">
                         <button type="submit" class="search-button">
-                            Cari Pekerjaan
+                            <i class="fas fa-search"></i> Cari Pekerjaan
                         </button>
                     </div>
                 </form>
             </section>
 
             <section class="jobs-section">
-                <h2>Lowongan Tersedia</h2>
-                <div class="job-grid">
+                <div class="section-title">
+                    <h2>Lowongan Tersedia</h2>
+                </div>
+                <div class="jobs-container">
+                    <div class="job-grid">
                     <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                        <a href="detail_lowongan.php?id=<?= $row['id'] ?>" class="job-card">
-                            <div class="job-card-header">
-                                <h3 class="company-name">
-                                    <i class="fas fa-building"></i>
-                                    <?= htmlspecialchars($row['nama_perusahaan']) ?>
-                                </h3>
-                                <h4 class="job-title"><?= htmlspecialchars($row['judul']) ?></h4>
-                            </div>
-                            <div class="job-card-body">
-                                <p class="location">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <?= htmlspecialchars($row['lokasi']) ?>
-                                </p>
-                                <div class="job-tags">
-                                    <span class="tag"><?= $row['jenis_pekerjaan'] ?></span>
-                                    <span class="tag"><?= $row['pendidikan'] ?></span>
-                                    <span class="tag"><?= $row['level_pekerjaan'] ?></span>
+                        <a href="detail_lowongan.php?id=<?= $row['id'] ?>" class="job-card-link">
+                            <div class="job-card">
+                                <div class="job-card-header">
+                                    <h3 class="company-name">
+                                        <i class="fas fa-building"></i>
+                                        <?= htmlspecialchars($row['nama_perusahaan']) ?>
+                                    </h3>
+                                    <h4 class="job-title"><?= htmlspecialchars($row['judul']) ?></h4>
                                 </div>
-                            </div>
-                            <div class="job-card-footer">
-                                <p class="salary">
-                                    <i class="fas fa-money-bill-wave"></i>
-                                    <?= htmlspecialchars($row['gaji']) ?>
-                                </p>
-                                <p class="posted-date">
-                                    <i class="far fa-calendar-alt"></i>
-                                    <?= $row['tanggal_posting'] ?>
-                                </p>
+                                <div class="job-card-body">
+                                    <p class="location">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <?= htmlspecialchars($row['lokasi']) ?>
+                                    </p>
+                                    <div class="job-tags">
+                                        <span class="tag"><?= $row['jenis_pekerjaan'] ?></span>
+                                        <span class="tag"><?= $row['pendidikan'] ?></span>
+                                        <span class="tag"><?= $row['level_pekerjaan'] ?></span>
+                                    </div>
+                                </div>
+                                <div class="job-card-footer">
+                                    <p class="salary">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                        <?= htmlspecialchars($row['gaji']) ?>
+                                    </p>
+                                    <p class="posted-date">
+                                        <i class="far fa-calendar-alt"></i>
+                                        <?= $row['tanggal_posting'] ?>
+                                    </p>
+                                </div>
                             </div>
                         </a>
                     <?php endwhile; ?>
+                    </div>
                 </div>
             </section>
         </div>
     </main>
 
     <footer>
-        <p>&copy; IL.</p>
+        <p>&copy; 2024 InfoLoker. All rights reserved.</p>
     </footer>
 </body>
 </html>

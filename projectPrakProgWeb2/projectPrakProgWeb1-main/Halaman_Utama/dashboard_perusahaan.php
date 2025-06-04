@@ -27,52 +27,89 @@ $lowongan = mysqli_query($conn, "
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Perusahaan</title>
-    <link rel="stylesheet" href="UtamaPerusahaan.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' rel='stylesheet'>
 </head>
 <body>
-
-<?php include 'partials/header.php'; ?>
-
-<nav class="breadcrumb">
-    <a href="#">Home</a> / <a href="#">Dashboard Perusahaan</a>
-</nav>
-
-<section id="search">
-    <h2>Selamat datang, <?= htmlspecialchars($perusahaan['nama_perusahaan']) ?></h2>
-    <p>📍 Lokasi: <?= $perusahaan['lokasi'] ?></p>
-    <button class="tombol-pencarian" onclick="window.location.href='tambah_lowongan.php'">➕ Tambah Lowongan</button>
-</section>
-
-<h1 class="lowongan-tanda">Lowongan Kerja Yang Anda Buka</h1>
-
-<section id="job-listings">
-    <div class="job-container">
-        <?php while ($row = mysqli_fetch_assoc($lowongan)): ?>
-            <div class="job-card">
-                <h3><?= htmlspecialchars($row['judul']) ?></h3>
-                <h2><?= htmlspecialchars($perusahaan['nama_perusahaan']) ?></h2>
-                <p>📍 <?= htmlspecialchars($row['lokasi']) ?></p>
-                <div class="job-tags">
-                    <span class="job-tag"><?= $row['jenis_pekerjaan'] ?></span>
-                    <span class="job-tag"><?= $row['pendidikan'] ?></span>
-                    <span class="job-tag"><?= $row['level_pekerjaan'] ?></span>
-                </div>
-                <div class="job-footer">
-                    <p class="salary">💰 <?= $row['gaji'] ?></p>
-                    <p>Pelamar: <?= $row['jumlah_pelamar'] ?> orang</p>
-                </div>
-                <div style="margin-top: 10px;">
-                    <a href="edit_lowongan.php?id=<?= $row['id'] ?>" class="job-tag" style="background:#ffc107;">✏ Edit</a>
-                    <a href="hapus_lowongan.php?id=<?= $row['id'] ?>" class="job-tag" style="background:#dc3545;" onclick="return confirm('Yakin ingin menghapus lowongan ini?')">🗑 Hapus</a>
-                    <a href="lihat_pelamar.php?id=<?= $row['id'] ?>" class="job-tag" style="background:#17a2b8;">👀 Lihat Pelamar</a>
-                </div>
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">IL</div>
+                <div class="logo-text">InfoLoker</div>
             </div>
-        <?php endwhile; ?>
-    </div>
-</section>
+            <nav class="nav-links">
+                <a href="dashboard_perusahaan.php" class="active">Beranda</a>
+                <a href="profile.php">Profil</a>
+                <a href="lowongan_saya.php">Lowongan Saya</a>
+                <a href="logout.php">Keluar</a>
+            </nav>
+        </div>
+    </header>
 
-<?php include 'partials/footer.php'; ?>
+    <main class="main-content">
+        <div class="dashboard-container">
+            <section class="search-section">
+                <h1>Selamat datang, <?= htmlspecialchars($perusahaan['nama_perusahaan']) ?></h1>
+                <p class="search-subtitle">📍 <?= htmlspecialchars($perusahaan['lokasi']) ?></p>
+            </section>
 
+            <section class="jobs-section">
+                <div class="section-title">
+                    <h2>Lowongan Yang Dibuka</h2>
+                    <a href="tambah_lowongan.php" class="add-job-button">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+                
+                <div class="job-grid">
+                    <?php while ($row = mysqli_fetch_assoc($lowongan)): ?>
+                        <div class="job-card">
+                            <div class="job-card-header">
+                                <h3 class="company-name">
+                                    <i class="fas fa-building"></i>
+                                    <?= htmlspecialchars($perusahaan['nama_perusahaan']) ?>
+                                </h3>
+                                <h4 class="job-title"><?= htmlspecialchars($row['judul']) ?></h4>
+                                <p class="location">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <?= htmlspecialchars($row['lokasi']) ?>
+                                </p>
+                            </div>
+                            <div class="job-card-body">
+                                <div class="job-tags">
+                                    <span class="tag"><?= $row['jenis_pekerjaan'] ?></span>
+                                    <span class="tag"><?= $row['pendidikan'] ?></span>
+                                    <span class="tag"><?= $row['level_pekerjaan'] ?></span>
+                                </div>
+                            </div>
+                            <div class="job-card-footer">
+                                <span><i class="fas fa-money-bill-wave"></i> <?= $row['gaji'] ?></span>
+                                <span><i class="fas fa-users"></i> <?= $row['jumlah_pelamar'] ?> Pelamar</span>
+                            </div>
+                            <div class="action-buttons">
+                                <a href="edit_lowongan.php?id=<?= $row['id'] ?>" class="action-btn edit">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="lihat_pelamar.php?id=<?= $row['id'] ?>" class="action-btn view">
+                                    <i class="fas fa-eye"></i> Lihat Pelamar
+                                </a>
+                                <a href="hapus_lowongan.php?id=<?= $row['id'] ?>" class="action-btn delete" 
+                                   onclick="return confirm('Yakin ingin menghapus lowongan ini?')">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </a>
+                            </div>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; IL.</p>
+    </footer>
 </body>
 </html>
