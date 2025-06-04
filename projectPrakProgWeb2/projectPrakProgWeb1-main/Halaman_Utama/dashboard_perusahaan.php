@@ -1,11 +1,10 @@
 <?php
 session_start();
-require 'koneksi.php';
-
-if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'perusahaan') {
-    header("Location: login.php");
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'perusahaan') {
+    header("Location: ../Halaman_Login/login.php");
     exit();
 }
+require '../koneksi.php';
 
 $userId = $_SESSION['id'];
 

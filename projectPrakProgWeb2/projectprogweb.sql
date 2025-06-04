@@ -120,7 +120,7 @@ INSERT INTO `perusahaan` (`id`, `user_id`, `nama_perusahaan`, `lokasi`, `logo`) 
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL UNIQUE,
   `password` varchar(255) NOT NULL,
   `role` enum('pelamar','perusahaan') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -129,11 +129,11 @@ CREATE TABLE `users` (
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `role`) VALUES
-(1, 'ptmakmur@gmail.com', '819b0643d6b89dc9b579fdfc9094f28e', 'perusahaan'),
-(2, 'warungnasi@gmail.com', '34cc93ece0ba9e3f6f235d4af979b16c', 'perusahaan'),
-(3, 'pelamar1@gmail.com', '7c6a180b36896a0a8c02787eeafb0e4c', 'pelamar'),
-(4, 'pelamar2@gmail.com', '6cb75f652a9b52798eb6cf2201057c73', 'pelamar');
+INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
+(1, 'ptmakmur', 'admin', 'perusahaan'),
+(2, 'warungnasi', 'perusahaan', 'perusahaan'),
+(3, 'pelamar1', 'password', 'pelamar'),
+(4, 'pelamar2', '123456', 'pelamar');
 
 --
 -- Indexes for dumped tables
@@ -173,7 +173,7 @@ ALTER TABLE `perusahaan`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang

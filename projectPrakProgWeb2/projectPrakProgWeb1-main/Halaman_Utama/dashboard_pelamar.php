@@ -1,10 +1,9 @@
 <?php
-// session_start();
-// if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'pelamar') {
-//     header("Location: login.php");
-//     exit();
-// }
-
+session_start();
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'pelamar') {
+    header("Location: ../Halaman_Login/login.php");
+    exit();
+}
 require '../koneksi.php';
 
 $search = isset($_GET['search']) ? $_GET['search'] : '';
