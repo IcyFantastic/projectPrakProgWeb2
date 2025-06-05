@@ -30,7 +30,7 @@ $result = mysqli_query($conn, $sql);
     <link rel="stylesheet" href="UtamaPelamar.css">
 </head>
 <body>
-    <?php include '..partials/header.php'; ?>
+    <?php include '../partials/header.php'; ?>
 
     <main class="main-content">
         <div class="dashboard-container">
