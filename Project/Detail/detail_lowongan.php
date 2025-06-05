@@ -56,9 +56,11 @@ $sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
         <p class="company-name">🏢 <a href="#"><?= htmlspecialchars($lowongan['nama_perusahaan']) ?></a></p>
 
         <?php if ($sudahMelamar): ?>
-            <div style="color: red; font-weight: bold;">⚠️ Anda sudah pernah melamar LOWONGAN ini.</div>
+            <div class="warning-message">⚠️ Anda sudah pernah melamar LOWONGAN ini.</div>
         <?php else: ?>
-            <button class="apply-btn" onclick="window.location.href='../Apply/form_lamaran.php?id=<?= $lowongan['id'] ?>'">Lamar Pekerjaan</button>
+            <button class="apply-btn" onclick="window.location.href='../Apply/form_lamaran.php?id=<?= $lowongan['id'] ?>'">
+                📝 Lamar Pekerjaan
+            </button>
         <?php endif; ?>
     </div>
 

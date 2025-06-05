@@ -63,10 +63,24 @@ CREATE TABLE `lowongan` (
 --
 
 INSERT INTO `lowongan` (`id`, `perusahaan_id`, `judul`, `lokasi`, `jenis_pekerjaan`, `level_pekerjaan`, `pendidikan`, `gaji`, `deskripsi`, `keahlian`, `kualifikasi`, `tanggal_posting`) VALUES
-(1, 1, 'Staff Admin', 'Jakarta Barat', 'Full Time', 'Junior / Entry Level', 'SMA / SMK / STM, Diploma/D1/D2/D3, Sarjana / S1', 'Negosiasi', 'Melakukan pengawasan implementasi sistem operasional dari segi administratif...', 'Komunikatif, bisa Microsoft Office', 'Lulusan SMA/D3/S1, pengalaman 1 tahun', '2025-05-20'),
-(2, 1, 'Staff Finance', 'Jakarta Barat', 'Full Time', 'Junior / Entry Level', 'Diploma/D3, Sarjana', 'Negosiasi', 'Mengelola keuangan dan transaksi keluar masuk perusahaan...', 'Mampu mengoperasikan Excel, ketelitian tinggi', 'Lulusan Akuntansi, minimal 1 tahun pengalaman', '2025-05-20'),
-(3, 2, 'Fulltime Cook/Bar/Cashier', 'Jakarta Selatan', 'Full Time', 'Junior / Entry Level', 'SMA / SMK', 'Negosiasi', 'Melayani konsumen dan memasak sesuai SOP...', 'Memiliki basic cooking skill, bisa prepare & bersih dapur', 'Usia 17+, pengalaman 1 tahun atau jurusan Tata Boga', '2025-05-20'),
-(4, 2, 'Kasir & Pelayanan Pelanggan', 'Jakarta Selatan', 'Part Time', 'Entry Level', 'SMA / SMK', 'Negosiasi', 'Menjalankan kasir dan bantu pelayanan customer...', 'Ramah, jujur, dan bertanggung jawab', 'Usia 18+, mampu kerja shift', '2025-05-20');
+(1, 1, 'Part Time Jaga Stand', 'Kota Bandung', 'Part Time', 'Entry Level', 'SMA / SMK', 'Kompetitif', 
+'- Goreng Cireng\n- Melayani Konsumen dgn Baik\n- Mencatat Laporan Penjualan\n- Set Up Booth Ditempat', 
+'- Kemampuan komunikasi\n- Kemampuan menggoreng', 
+'- Pria, diutamakan sekitar jam 4 sore waktunya kosong\n- Usia min. 18th\n- Memiliki Kendaraan & Memiliki SIM C', 
+'2025-05-22'),
+
+(2, 2, 'Freelance Event Organizer', 'Jakarta Selatan', 'Freelance', 'Junior / Entry Level', 'Diploma/D1/D2/D3, SMA / SMK / STM', 'Negosiasi', 
+'Menyiapkan event mulai dari ide, persiapan, hingga eksekusi event', 
+'- Bisa dekorasi Bunga\n- Bisa dekorasi Balon\n- Bisa handle event mulai dari ide, persiapan, hingga eksekusi event', 
+'- Pria/Wanita\n- Fresh graduate silahkan melamar', 
+'2025-05-22'),
+
+(3, 3, 'Project Manager', 'Bogor', 'Full Time', 'Manager / Assistant Manager', 'Sarjana / S1', 'Rp 4.000.000,00 - Rp 5.000.000,00', 
+'- Merencanakan dan mengawasi jalannya proyek\n- Memantau progres proyek\n- Berkomunikasi dengan klien\n- Membuat estimasi anggaran instalasi (BoQ)', 
+'- Kemampuan membaca gambar kerja, RAP, dan RAB\n- Penguasaan perangkat lunak seperti Microsoft Office, AutoCAD\n- Keterampilan komunikasi dan koordinasi', 
+'- Pendidikan minimal SMA/SMK atau D3, diutamakan jurusan Teknik Sipil, Teknik Arsitektur\n- Berpengalaman 3-4 Tahun\n- Bersedia bekerja di kantor Bogor dan lokasi proyek', 
+'2025-05-22');
+
 
 -- --------------------------------------------------------
 
@@ -87,8 +101,8 @@ CREATE TABLE `pelamar` (
 --
 
 INSERT INTO `pelamar` (`id`, `user_id`, `nama_lengkap`, `tanggal_lahir`, `no_hp`) VALUES
-(1, 3, 'Budi Santoso', '2000-01-15', '081234567890'),
-(2, 4, 'Siti Rahma', '1999-06-25', '081298765432');
+(1, 1, 'Budi Santoso', '2000-01-15', '081234567890'),
+(2, 2, 'Siti Rahma', '1999-06-25', '081298765432');
 
 -- --------------------------------------------------------
 
@@ -109,8 +123,11 @@ CREATE TABLE `perusahaan` (
 --
 
 INSERT INTO `perusahaan` (`id`, `user_id`, `nama_perusahaan`, `lokasi`, `logo`) VALUES
-(1, 1, 'PT. Mitra Makmur Sahabat', 'Jakarta Barat', 'PT. Mitra Makmur Sahabat.jpg'),
-(2, 2, 'Warung Nasi Indonesia', 'Jakarta Selatan', 'Warung Makan Indonesia.png');
+(1, 1, 'PT. Mitra Makmur Sahabat', 'Jakarta Barat', 'PT._Mitra_Makmur_Sahabat.jpg'),
+(2, 2, 'Warung Nasi Indonesia', 'Jakarta Selatan', 'Warung_Makan_Indonesia.png');
+(3, 3, 'Cireng Napoleon', 'Kiara Condong & Batununggal', 'Cireng_Napoleon.png'),
+(4, 4, 'Jakarta Surprise Planner', 'Tanggerang', 'Jakarta_Surprise_Planner.jpg'),
+(5, 5, 'PT. AgriFam', 'Bogor', 'PT._AgriFam.jpg');
 
 -- --------------------------------------------------------
 
@@ -130,10 +147,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
-(1, 'ptmakmur', 'admin', 'perusahaan'),
-(2, 'warungnasi', 'perusahaan', 'perusahaan'),
-(3, 'pelamar1', 'password', 'pelamar'),
-(4, 'pelamar2', '123456', 'pelamar');
+(1, 'PTMakmur', 'adminmakmur', 'perusahaan'),
+(2, 'WarungNasi', 'adminwarung', 'perusahaan'),
+(3, 'CirengNapoleon', 'admincireng', 'perusahaan'),
+(4, 'JakartaSurprise', 'adminsurprise', 'perusahaan'),
+(5, 'PTAgriFam', 'adminagri', 'perusahaan');
+(6, 'Hansel', 'Hansel', 'pelamar'),
+(7, 'Darryl', 'Darryl', 'pelamar');
 
 --
 -- Indexes for dumped tables
