@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'perusahaan') {
-    header("Location: ../Halaman_Login/login.php");
+    header("Location: ../Login/login.php");
     exit();
 }
 require '../koneksi.php';
@@ -37,7 +37,7 @@ $lowongan = mysqli_query($conn, "
 
     <nav class="breadcrumb">
         <div class="breadcrumb-content">
-            <a href="../Halaman_Utama/dashboard_perusahaan.php">Home</a> / <span>Dashboard Perusahaan</span>
+            <a href="../Dashboard/dashboard_perusahaan.php">Home</a> / <span>Dashboard Perusahaan</span>
         </div>
     </nav>
 

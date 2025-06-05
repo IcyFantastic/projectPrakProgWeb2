@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'perusahaan') {
-    header("Location: ../Halaman_Login/login.php");
+    header("Location: ../Login/login.php");
     exit();
 }
 require '../koneksi.php';
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     ");
 
     if ($update) {
-        echo "<script>alert('✅ Lowongan berhasil diperbarui!'); window.location='dashboard_perusahaan.php';</script>";
+        echo "<script>alert('✅ Lowongan berhasil diperbarui!'); window.location='../Dashboard/dashboard_perusahaan.php';</script>";
         exit();
     } else {
         echo "Gagal update: " . mysqli_error($conn);
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <nav class="breadcrumb">
     <div class="breadcrumb-content">
-        <a href="../Halaman_Utama/dashboard_perusahaan.php">Home</a> / <span>Edit Lowongan</span>
+        <a href="../Dashboard/dashboard_perusahaan.php">Home</a> / <span>Edit Lowongan</span>
     </div>
 </nav>
 

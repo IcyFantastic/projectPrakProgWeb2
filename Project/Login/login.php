@@ -24,10 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['role'] = $user['role'];
 
         if ($user['role'] == 'pelamar') {
-            header("Location: ../Halaman_Utama/dashboard_pelamar.php");
+            header("Location: ../Dashboard/dashboard_pelamar.php");
             exit();
         } elseif ($user['role'] == 'perusahaan') {
-            header("Location: ../Halaman_Utama/dashboard_perusahaan.php");
+            header("Location: ../Dashboard/dashboard_perusahaan.php");
             exit();
         }
     } else {

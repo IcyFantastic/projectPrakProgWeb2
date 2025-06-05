@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'perusahaan') {
-    header("Location: ../Halaman_Login/login.php");
+    header("Location: ../Login/login.php");
     exit();
 }
 require '../koneksi.php';
@@ -48,7 +48,7 @@ $pelamarQuery = mysqli_query($conn, "
 
     <nav class="breadcrumb">
         <div class="breadcrumb-content">
-            <a href="../Halaman_Utama/dashboard_perusahaan.php">Home</a> / <span>Daftar Pelamar</span>
+            <a href="../Dashboard/dashboard_perusahaan.php">Home</a> / <span>Daftar Pelamar</span>
         </div>
     </nav>
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'pelamar') {
-    header("Location: ../Halaman_Login/login.php");
+    header("Location: ../Login/login.php");
     exit();
 }
 require '../koneksi.php';
@@ -54,7 +54,7 @@ $result = mysqli_query($conn, $sql);
                 <h2>Lowongan Tersedia</h2>
                 <div class="job-grid">
                     <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                        <a href="detail_lowongan.php?id=<?= $row['id'] ?>" class="job-card">
+                        <a href="../Detail/detail_lowongan.php?id=<?= $row['id'] ?>" class="job-card">
                             <div class="job-card-header">
                                 <h3 class="company-name">
                                     <i class="fas fa-building"></i>
