@@ -29,7 +29,12 @@ if (!$lowongan) {
 
 // Ambil data pelamar
 $pelamarQuery = mysqli_query($conn, "
-    SELECT lamaran.*, pelamar.nama_lengkap, pelamar.tanggal_lahir, pelamar.no_hp, pelamar.user_id
+    SELECT 
+        lamaran.*,
+        pelamar.nama_lengkap,
+        pelamar.tanggal_lahir,
+        pelamar.no_hp,
+        pelamar.email
     FROM lamaran
     JOIN pelamar ON lamaran.pelamar_id = pelamar.id
     WHERE lamaran.lowongan_id = $lowonganId
@@ -80,17 +85,17 @@ $pelamarQuery = mysqli_query($conn, "
                                 <td><?= htmlspecialchars($p['tanggal_lahir']) ?></td>
                                 <td class="document-cell">
                                     <?php if ($p['cv']): ?>
-                                        <a href="uploads/cv/<?= $p['cv'] ?>" target="_blank" class="view-link">Lihat CV</a>
+                                        <a href="uploads/cv/<?= $p['cv'] ?>" target="_blank" class="view-link">CV</a>
                                     <?php else: ?>-<?php endif; ?>
                                 </td>
                                 <td class="document-cell">
                                     <?php if ($p['portofolio']): ?>
-                                        <a href="uploads/portofolio/<?= $p['portofolio'] ?>" target="_blank" class="view-link">Lihat Portfolio</a>
+                                        <a href="uploads/portofolio/<?= $p['portofolio'] ?>" target="_blank" class="view-link">Portfolio</a>
                                     <?php else: ?>-<?php endif; ?>
                                 </td>
                                 <td class="document-cell">
                                     <?php if ($p['surat_lamaran']): ?>
-                                        <a href="uploads/surat/<?= $p['surat_lamaran'] ?>" target="_blank" class="view-link">Lihat Surat</a>
+                                        <a href="uploads/surat/<?= $p['surat_lamaran'] ?>" target="_blank" class="view-link">Surat</a>
                                     <?php else: ?>-<?php endif; ?>
                                 </td>
                                 <td><?= $p['waktu_lamaran'] ?></td>

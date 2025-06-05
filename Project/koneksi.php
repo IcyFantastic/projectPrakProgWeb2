@@ -2,7 +2,7 @@
 $host = 'localhost';
 $user = 'root';
 $pass = '';
-$db = 'infoloker';
+$db = 'progweb';
 
 $conn = mysqli_connect($host, $user, $pass, $db);
 
