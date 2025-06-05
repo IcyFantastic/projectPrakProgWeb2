@@ -1,6 +1,0 @@
-/uploads
-/vendor
-.env
-*.log
-.vscode/
-node_modules/
