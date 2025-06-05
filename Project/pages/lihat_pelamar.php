@@ -1,11 +1,10 @@
 <?php
 session_start();
-require 'koneksi.php';
-
-if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'perusahaan') {
-    header("Location: login.php");
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'perusahaan') {
+    header("Location: ../Halaman_Login/login.php");
     exit();
 }
+require '../koneksi.php';
 
 $userId = $_SESSION['id'];
 $lowonganId = $_GET['id'] ?? null;
@@ -30,10 +29,9 @@ if (!$lowongan) {
 
 // Ambil data pelamar
 $pelamarQuery = mysqli_query($conn, "
-    SELECT lamaran.*, pelamar.nama_lengkap, pelamar.tanggal_lahir, pelamar.no_hp, users.email
+    SELECT lamaran.*, pelamar.nama_lengkap, pelamar.tanggal_lahir, pelamar.no_hp, pelamar.user_id
     FROM lamaran
     JOIN pelamar ON lamaran.pelamar_id = pelamar.id
-    JOIN users ON pelamar.user_id = users.id
     WHERE lamaran.lowongan_id = $lowonganId
 ");
 ?>
@@ -43,88 +41,72 @@ $pelamarQuery = mysqli_query($conn, "
 <head>
     <meta charset="UTF-8">
     <title>Daftar Pelamar - <?= htmlspecialchars($lowongan['judul']) ?></title>
-    <link rel="stylesheet" href="UtamaPerusahaan.css">
-    <style>
-        table {
-            width: 90%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #007bff;
-            color: white;
-        }
-        td a {
-            color: #007bff;
-            font-weight: bold;
-            text-decoration: none;
-        }
-    </style>
+    <link rel="stylesheet" href="lihat_pelamar.css">
 </head>
 <body>
+    <?php include '../partials/header.php'; ?>
 
-<?php include 'partials/header.php'; ?>
+    <nav class="breadcrumb">
+        <div class="breadcrumb-content">
+            <a href="../Halaman_Utama/dashboard_perusahaan.php">Home</a> / <span>Daftar Pelamar</span>
+        </div>
+    </nav>
 
-<nav class="breadcrumb">
-    <a href="dashboard_perusahaan.php">Dashboard</a> / 
-    <a href="#">Daftar Pelamar</a>
-</nav>
+    <div class="main-content">
+        <section class="applicant-section">
+            <h1 class="section-title">Pelamar untuk: <?= htmlspecialchars($lowongan['judul']) ?></h1>
 
-<h1 class="lowongan-tanda">Pelamar untuk: <?= htmlspecialchars($lowongan['judul']) ?></h1>
+            <?php if (mysqli_num_rows($pelamarQuery) > 0): ?>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Lengkap</th>
+                                <th>Email</th>
+                                <th>Nomor HP</th>
+                                <th>Tanggal Lahir</th>
+                                <th>CV</th>
+                                <th>Portofolio</th>
+                                <th>Surat Lamaran</th>
+                                <th>Waktu Melamar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($p = mysqli_fetch_assoc($pelamarQuery)): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($p['nama_lengkap']) ?></td>
+                                <td><?= htmlspecialchars($p['email']) ?></td>
+                                <td><?= htmlspecialchars($p['no_hp']) ?></td>
+                                <td><?= htmlspecialchars($p['tanggal_lahir']) ?></td>
+                                <td class="document-cell">
+                                    <?php if ($p['cv']): ?>
+                                        <a href="uploads/cv/<?= $p['cv'] ?>" target="_blank" class="view-link">Lihat CV</a>
+                                    <?php else: ?>-<?php endif; ?>
+                                </td>
+                                <td class="document-cell">
+                                    <?php if ($p['portofolio']): ?>
+                                        <a href="uploads/portofolio/<?= $p['portofolio'] ?>" target="_blank" class="view-link">Lihat Portfolio</a>
+                                    <?php else: ?>-<?php endif; ?>
+                                </td>
+                                <td class="document-cell">
+                                    <?php if ($p['surat_lamaran']): ?>
+                                        <a href="uploads/surat/<?= $p['surat_lamaran'] ?>" target="_blank" class="view-link">Lihat Surat</a>
+                                    <?php else: ?>-<?php endif; ?>
+                                </td>
+                                <td><?= $p['waktu_lamaran'] ?></td>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php else: ?>
+                <div class="empty-state">
+                    <p>Belum ada pelamar untuk lowongan ini.</p>
+                </div>
+            <?php endif; ?>
+        </section>
+    </div>
 
-<?php if (mysqli_num_rows($pelamarQuery) > 0): ?>
-    <table>
-        <thead>
-            <tr>
-                <th>Nama Lengkap</th>
-                <th>Email</th>
-                <th>Nomor HP</th>
-                <th>Tanggal Lahir</th>
-                <th>CV</th>
-                <th>Portofolio</th>
-                <th>Surat Lamaran</th>
-                <th>Waktu Melamar</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($p = mysqli_fetch_assoc($pelamarQuery)): ?>
-            <tr>
-                <td><?= htmlspecialchars($p['nama_lengkap']) ?></td>
-                <td><?= htmlspecialchars($p['email']) ?></td>
-                <td><?= htmlspecialchars($p['no_hp']) ?></td>
-                <td><?= htmlspecialchars($p['tanggal_lahir']) ?></td>
-                <td>
-                    <?php if ($p['cv']): ?>
-                        <a href="uploads/cv/<?= $p['cv'] ?>" target="_blank">Lihat</a>
-                    <?php else: ?>-<?php endif; ?>
-                </td>
-                <td>
-                    <?php if ($p['portofolio']): ?>
-                        <a href="uploads/portofolio/<?= $p['portofolio'] ?>" target="_blank">Lihat</a>
-                    <?php else: ?>-<?php endif; ?>
-                </td>
-                <td>
-                    <?php if ($p['surat_lamaran']): ?>
-                        <a href="uploads/surat/<?= $p['surat_lamaran'] ?>" target="_blank">Lihat</a>
-                    <?php else: ?>-<?php endif; ?>
-                </td>
-                <td><?= $p['waktu_lamaran'] ?></td>
-            </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
-<?php else: ?>
-    <p style="text-align: center; margin-top: 50px; color: gray;">Belum ada pelamar untuk lowongan ini.</p>
-<?php endif; ?>
-
-<?php include 'partials/footer.php'; ?>
-
+    <?php include '../partials/footer.php'; ?>
 </body>
 </html>

@@ -1,11 +1,10 @@
 <?php
 session_start();
-require 'koneksi.php';
-
-if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'perusahaan') {
-    header("Location: login.php");
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'perusahaan') {
+    header("Location: ../Halaman_Login/login.php");
     exit();
 }
+require '../koneksi.php';
 
 $userId = $_SESSION['id'];
 $lowonganId = $_GET['id'] ?? null;
@@ -68,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Edit Lowongan</title>
-    <link rel="stylesheet" href="StyleApply.css">
+    <link rel="stylesheet" href="lowongan.css">
     <style>
         textarea { width: 100%; padding: 10px; margin: 10px 0; }
         input, select { margin-bottom: 10px; }
@@ -76,7 +75,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
 
-<?php include 'partials/header.php'; ?>
+<?php include '../partials/header.php'; ?>
+
+<nav class="breadcrumb">
+    <div class="breadcrumb-content">
+        <a href="../Halaman_Utama/dashboard_perusahaan.php">Home</a> / <span>Edit Lowongan</span>
+    </div>
+</nav>
 
 <section id="apply">
     <h2>Edit Lowongan Pekerjaan</h2>
@@ -89,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <label>Jenis Pekerjaan</label>
         <select name="jenis_pekerjaan" required>
+            <option <?= $lowongan['jenis_pekerjaan'] === '-- Jenis Pekerjaan --' ? 'selected' : '' ?>>-- Jenis Pekerjaan --</option>
             <option <?= $lowongan['jenis_pekerjaan'] === 'Full Time' ? 'selected' : '' ?>>Full Time</option>
             <option <?= $lowongan['jenis_pekerjaan'] === 'Part Time' ? 'selected' : '' ?>>Part Time</option>
             <option <?= $lowongan['jenis_pekerjaan'] === 'Kontrak' ? 'selected' : '' ?>>Kontrak</option>
@@ -97,9 +103,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <label>Level Pekerjaan</label>
         <select name="level_pekerjaan" required>
-            <option <?= $lowongan['level_pekerjaan'] === 'Entry Level' ? 'selected' : '' ?>>Entry Level</option>
+            <option <?= $lowongan['level_pekerjaan'] === '-- Level Pekerjaan --' ? 'selected' : '' ?>>-- Level Pekerjaan --</option>
             <option <?= $lowongan['level_pekerjaan'] === 'Junior / Entry Level' ? 'selected' : '' ?>>Junior / Entry Level</option>
+            <option <?= $lowongan['level_pekerjaan'] === 'Mid Level' ? 'selected' : '' ?>>Mid Level</option>
             <option <?= $lowongan['level_pekerjaan'] === 'Senior Level' ? 'selected' : '' ?>>Senior Level</option>
+            <option <?= $lowongan['level_pekerjaan'] === 'Executive Level' ? 'selected' : '' ?>>Executive Level</option>
         </select>
 
         <label>Pendidikan Minimal</label>
@@ -121,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 </section>
 
-<?php include 'partials/footer.php'; ?>
+<?php include '../partials/footer.php'; ?>
 
 </body>
 </html>

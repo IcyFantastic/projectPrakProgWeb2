@@ -1,11 +1,10 @@
 <?php
 session_start();
-require 'koneksi.php';
-
-if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'perusahaan') {
-    header("Location: login.php");
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'perusahaan') {
+    header("Location: ../Halaman_Login/login.php");
     exit();
 }
+require '../koneksi.php';
 
 $userId = $_SESSION['id'];
 
@@ -44,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Tambah Lowongan</title>
-    <link rel="stylesheet" href="StyleApply.css">
+    <link rel="stylesheet" href="lowongan.css">
     <style>
         textarea { width: 100%; padding: 10px; margin: 10px 0; }
         input, select { margin-bottom: 10px; }
@@ -52,7 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-<?php include 'partials/header.php'; ?>
+<?php include '../partials/header.php'; ?>
+
+<nav class="breadcrumb">
+    <div class="breadcrumb-content">
+        <a href="../Halaman_Utama/dashboard_perusahaan.php">Home</a> / <span>Tambah Lowongan</span>
+    </div>
+</nav>
 
 <section id="apply">
     <h2>Tambah Lowongan Pekerjaan</h2>
@@ -65,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <label>Jenis Pekerjaan</label>
         <select name="jenis_pekerjaan" required>
+            <option value="-- Jenis Pekerjaan --">-- Jenis Pekerjaan --</option>
             <option value="Full Time">Full Time</option>
             <option value="Part Time">Part Time</option>
             <option value="Kontrak">Kontrak</option>
@@ -73,9 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <label>Level Pekerjaan</label>
         <select name="level_pekerjaan" required>
-            <option value="Entry Level">Entry Level</option>
+            <option value="-- Level Pekerjaan --">-- Level Pekerjaan --</option>
             <option value="Junior / Entry Level">Junior / Entry Level</option>
+            <option value="Mid Level">Mid Level</option>
             <option value="Senior Level">Senior Level</option>
+            <option value="Executive Level">Executive Level</option>
         </select>
 
         <label>Pendidikan Minimal</label>
@@ -97,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </section>
 
-<?php include 'partials/footer.php'; ?>
+<?php include '../partials/footer.php'; ?>
 
 </body>
 </html>

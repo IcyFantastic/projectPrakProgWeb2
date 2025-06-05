@@ -28,51 +28,63 @@ $lowongan = mysqli_query($conn, "
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Perusahaan</title>
-    <link rel="stylesheet" href="UtamaPelamar.css">
+    <link rel="stylesheet" href="utama_perusahaan.css">
 </head>
 <body>
 
-<?php include '../partials/header.php'; ?>
+<div class="dashboard-container">
+    <?php include '../partials/header.php'; ?>
 
-<nav class="breadcrumb">
-    <a href="#">Home</a> / <a href="#">Dashboard Perusahaan</a>
-</nav>
+    <nav class="breadcrumb">
+        <div class="breadcrumb-content">
+            <a href="../Halaman_Utama/dashboard_perusahaan.php">Home</a> / <span>Dashboard Perusahaan</span>
+        </div>
+    </nav>
 
-<section id="search">
-    <h2>Selamat datang, <?= htmlspecialchars($perusahaan['nama_perusahaan']) ?></h2>
-    <p>📍 Lokasi: <?= $perusahaan['lokasi'] ?></p>
-    <button class="tombol-pencarian" onclick="window.location.href='tambah_lowongan.php'">➕ Tambah Lowongan</button>
-</section>
-
-<h1 class="lowongan-tanda">Lowongan Kerja Yang Anda Buka</h1>
-
-<section id="job-listings">
-    <div class="job-container">
-        <?php while ($row = mysqli_fetch_assoc($lowongan)): ?>
-            <div class="job-card">
-                <h3><?= htmlspecialchars($row['judul']) ?></h3>
-                <h2><?= htmlspecialchars($perusahaan['nama_perusahaan']) ?></h2>
-                <p>📍 <?= htmlspecialchars($row['lokasi']) ?></p>
-                <div class="job-tags">
-                    <span class="job-tag"><?= $row['jenis_pekerjaan'] ?></span>
-                    <span class="job-tag"><?= $row['pendidikan'] ?></span>
-                    <span class="job-tag"><?= $row['level_pekerjaan'] ?></span>
-                </div>
-                <div class="job-footer">
-                    <p class="salary">💰 <?= $row['gaji'] ?></p>
-                    <p>Pelamar: <?= $row['jumlah_pelamar'] ?> orang</p>
-                </div>
-                <div style="margin-top: 10px;">
-                    <a href="edit_lowongan.php?id=<?= $row['id'] ?>" class="job-tag" style="background:#ffc107;">✏ Edit</a>
-                    <a href="hapus_lowongan.php?id=<?= $row['id'] ?>" class="job-tag" style="background:#dc3545;" onclick="return confirm('Yakin ingin menghapus lowongan ini?')">🗑 Hapus</a>
-                    <a href="lihat_pelamar.php?id=<?= $row['id'] ?>" class="job-tag" style="background:#17a2b8;">👀 Lihat Pelamar</a>
-                </div>
+    <div class="main-content">
+        <section id="search" class="welcome-section">
+            <div class="welcome-header">
+                <h2>Selamat datang, <?= htmlspecialchars($perusahaan['nama_perusahaan']) ?></h2>
+                <p>📍 Lokasi: <?= $perusahaan['lokasi'] ?></p>
             </div>
-        <?php endwhile; ?>
-    </div>
-</section>
+            <button class="action-button" onclick="window.location.href='../Perusahaan/tambah_lowongan.php'">
+                <span class="button-icon">➕</span> Tambah Lowongan
+            </button>
+        </section>
 
-<?php include '../partials/footer.php'; ?>
+        <h1 class="section-title">Lowongan Kerja Yang Anda Buka</h1>
+
+        <section id="job-listings">
+            <div class="job-container">
+                <?php while ($row = mysqli_fetch_assoc($lowongan)): ?>
+                    <div class="job-card">
+                        <div class="job-header">
+                            <h3><?= htmlspecialchars($row['judul']) ?></h3>
+                            <h2><?= htmlspecialchars($perusahaan['nama_perusahaan']) ?></h2>
+                            <p class="location">📍 <?= htmlspecialchars($row['lokasi']) ?></p>
+                        </div>
+                        <div class="job-tags">
+                            <span class="tag"><?= $row['jenis_pekerjaan'] ?></span>
+                            <span class="tag"><?= $row['pendidikan'] ?></span>
+                            <span class="tag"><?= $row['level_pekerjaan'] ?></span>
+                        </div>
+                        <div class="job-info">
+                            <p class="salary">💰 <?= $row['gaji'] ?></p>
+                            <p class="applicants">👥 Pelamar: <?= $row['jumlah_pelamar'] ?> orang</p>
+                        </div>
+                        <div class="action-buttons">
+                            <a href="../Perusahaan/edit_lowongan.php?id=<?= $row['id'] ?>" class="btn edit">✏ Edit</a>
+                            <a href="hapus_lowongan.php?id=<?= $row['id'] ?>" class="btn delete" onclick="return confirm('Yakin ingin menghapus lowongan ini?')">🗑 Hapus</a>
+                            <a href="../pages/lihat_pelamar.php?id=<?= $row['id'] ?>" class="btn view">👀 Lihat Pelamar</a>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+        </section>
+    </div>
+
+    <?php include '../partials/footer.php'; ?>
+</div>
 
 </body>
 </html>
