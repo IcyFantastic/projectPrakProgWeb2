@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="checkbox" name="remember">
                         Ingat Saya
                     </label>
-                    <a href="#" class="forgot-password">Lupa Kata Sandi?</a>
+                    <a href="reset-password.php" class="forgot-password">Lupa Kata Sandi?</a>
                 </div>
 
                 <button type="submit" class="login-btn">
@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </button>
 
                 <div class="register-link">
-                    Belum punya akun? <a href="#">Daftar Sekarang</a>
+                    Belum punya akun? <a href="register.php">Daftar Sekarang</a>
                 </div>
             </form>
         </div>

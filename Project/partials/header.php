@@ -1,4 +1,10 @@
-<?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
+<?php 
+if (session_status() === PHP_SESSION_NONE) session_start(); 
+
+// Definisikan base URL
+$baseUrl = '/projectPrakProgWeb2/Project';
+?>
+
 <header>
         <div class="header-content">
             <div class="logo-section">
@@ -6,10 +12,10 @@
                 <div class="logo-text">InfoLoker</div>
             </div>
             <nav class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#about">Tentang</a>
-                <a href="#vision">Visi & Misi</a>
-                <a href="#contact">Contact</a>
+                <a href="<?= $baseUrl ?>/Login/login.php">Home</a>
+                <a href="<?= $baseUrl ?>/Tambahan/about.php">Tentang</a>
+                <a href="<?= $baseUrl ?>/Tambahan/vision.php">Visi & Misi</a>
+                <a href="<?= $baseUrl ?>/Tambahan/contact.php">Contact</a>
             </nav>
         </div>
     </header>
