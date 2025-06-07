@@ -156,6 +156,27 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
 (7, 'Darryl', 'Darryl', 'pelamar');
 
 --
+-- Add email column to users table
+--
+ALTER TABLE `users`
+ADD COLUMN `email` varchar(255) NOT NULL AFTER `username`,
+ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Update existing users with their emails
+--
+UPDATE `users` SET `email` = CASE `username`
+    WHEN 'PTMakmur' THEN 'ptmakmur@gmail.com'
+    WHEN 'WarungNasi' THEN 'warungnasi@gmail.com'
+    WHEN 'CirengNapoleon' THEN 'cirengnapoleon@gmail.com'
+    WHEN 'JakartaSurprise' THEN 'jakartasurprise@gmail.com'
+    WHEN 'PTAgriFam' THEN 'ptagrifam@gmail.com'
+    WHEN 'Hansel' THEN 'hansel@gmail.com'
+    WHEN 'Darryl' THEN 'darryl@gmail.com'
+END
+WHERE `username` IN ('PTMakmur', 'WarungNasi', 'CirengNapoleon', 'JakartaSurprise', 'PTAgriFam', 'Hansel', 'Darryl');
+
+--
 -- Indexes for dumped tables
 --
 
