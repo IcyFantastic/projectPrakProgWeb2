@@ -46,7 +46,78 @@ $pelamarQuery = mysqli_query($conn, "
 <head>
     <meta charset="UTF-8">
     <title>Daftar Pelamar - <?= htmlspecialchars($lowongan['judul']) ?></title>
-    <link rel="stylesheet" href="lihat_pelamar.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .breadcrumb {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+        }
+        .breadcrumb-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+        .breadcrumb-content a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+        .breadcrumb-content span {
+            margin-left: 5px;
+        }
+        .main-content {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .applicant-section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .document-cell a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .document-cell a:hover {
+            text-decoration: underline;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
     <?php include '../partials/header.php'; ?>

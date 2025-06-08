@@ -6,8 +6,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InfoLoker - Hubungi Kami</title>
-    <link rel="stylesheet" href="tambahan.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .main-content {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .contact-section .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .contact-section h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        .contact-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        .info-card {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .info-card .card-icon {
+            font-size: 48px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .info-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .info-card p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group textarea {
+            resize: none;
+        }
+        .submit-btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <main class="main-content">

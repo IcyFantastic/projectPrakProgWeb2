@@ -7,15 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $role = isset($_POST['role']) ? $_POST['role'] : '';
 
-    // Debug: Print values
-    // echo "Username: $username, Password: $password, Role: $role";
-    
     $query = "SELECT * FROM users WHERE username='$username' AND password='$password' AND role='$role'";
     $result = mysqli_query($conn, $query);
-    
-    // Debug: Print query and any errors
-    // echo $query;
-    // echo mysqli_error($conn);
 
     if ($result && mysqli_num_rows($result) == 1) {
         $user = mysqli_fetch_assoc($result);
@@ -43,9 +36,88 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InfoLoker - Login</title>
-    <link rel="stylesheet" href="login.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="login.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .login-title {
+            font-size: 24px;
+            margin: 0;
+        }
+        .login-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .input-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-btn:hover {
+            background-color: #0056b3;
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .register-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const roleButtons = document.querySelectorAll('.role-btn');
+            const selectedRoleInput = document.getElementById('selectedRole');
+
+            roleButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    roleButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedRoleInput.value = this.getAttribute('data-role');
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <?php include '../partials/header.php'; ?>
