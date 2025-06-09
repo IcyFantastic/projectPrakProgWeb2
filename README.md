@@ -131,8 +131,6 @@ CREATE TABLE users...
 - 👨‍💻 Laurensius Rio Darryl [71231022]
 - 👩‍💻 Hansel Ivano Supratman[71231039]
 
-## 📄 License
-MIT License © [2025] [Project Praktikum ProgWeb UKDW]
 
 ## 🤝 Support
 - 📧 Email: support@example.com
