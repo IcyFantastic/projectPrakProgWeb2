@@ -1,10 +1,10 @@
 <?php
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'pelamar') {
-    header("Location: ../Login/login.php");
+    header("Location: login.php");
     exit();
 }
-require '../koneksi.php';
+require 'koneksi.php';
 
 if (!isset($_GET['id'])) {
     echo "ID lowongan tidak valid.";
@@ -248,11 +248,11 @@ $sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
 </head>
 <body>
 
-<?php include '../partials/header.php'; ?>
+<?php include 'header.php'; ?>
 
 <div class="container">
     <nav class="breadcrumb">
-        <a href="../Dashboard/dashboard_pelamar.php">Home</a> / <a href="#">Detail Lowongan</a>
+        <a href="dashboard_pelamar.php">Home</a> / <a href="#">Detail Lowongan</a>
     </nav>
     <div class="job-header">
         <h1><?= htmlspecialchars($lowongan['judul']) ?></h1>
@@ -261,7 +261,7 @@ $sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
         <?php if ($sudahMelamar): ?>
             <div class="warning-message">⚠️ Anda sudah pernah melamar LOWONGAN ini.</div>
         <?php else: ?>
-            <button class="apply-btn" onclick="window.location.href='../Apply/form_lamaran.php?id=<?= $lowongan['id'] ?>'">
+            <button class="apply-btn" onclick="window.location.href='form_lamaran.php?id=<?= $lowongan['id'] ?>'">
                 📝 Lamar Pekerjaan
             </button>
         <?php endif; ?>
@@ -302,10 +302,10 @@ $sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
         </div>
     </div>
 
-    <button class="back-btn" onclick="window.location.href='../Dashboard/dashboard_pelamar.php'">⬅ Kembali ke Halaman Utama</button>
+    <button class="back-btn" onclick="window.location.href='dashboard_pelamar.php'">⬅ Kembali ke Halaman Utama</button>
 </div>
 
-<?php include '../partials/footer.php'; ?>
+<?php include 'footer.php'; ?>
 
 </body>
 </html>

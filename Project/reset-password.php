@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../koneksi.php';
+require 'koneksi.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-    <?php include '../partials/header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <main class="main-content">
         <div class="reset-container">
@@ -145,6 +145,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </main>
 
-    <?php include '../partials/footer.php'; ?>
+    <?php include 'footer.php'; ?>
 </body>
 </html>

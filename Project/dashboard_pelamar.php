@@ -1,12 +1,16 @@
 <?php
 session_start();
+// Periksa apakah pengguna sudah login dan memiliki peran sebagai pelamar
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'pelamar') {
-    header("Location: ../Login/login.php");
+    header("Location: login.php");
     exit();
 }
-require '../koneksi.php';
+require 'koneksi.php';
 
+// Ambil kata kunci pencarian dari URL
 $search = isset($_GET['search']) ? $_GET['search'] : '';
+
+// Query untuk mencari lowongan berdasarkan kata kunci
 $sql = "SELECT l.*, p.nama_perusahaan 
         FROM lowongan l 
         JOIN perusahaan p ON l.perusahaan_id = p.id
@@ -28,6 +32,7 @@ $result = mysqli_query($conn, $sql);
     <title>Dashboard Pelamar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Variabel warna dan gaya global */
         :root {
             --primary-color: #6366f1;
             --primary-hover: #5856eb;
@@ -40,6 +45,7 @@ $result = mysqli_query($conn, $sql);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
+        /* Gaya untuk elemen body */
         body {
             font-family: 'Inter', sans-serif;
             margin: 0;
@@ -48,7 +54,7 @@ $result = mysqli_query($conn, $sql);
             min-height: 100vh;
         }
 
-        /* Header styles from login.css */
+        /* Gaya untuk header */
         header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -67,7 +73,7 @@ $result = mysqli_query($conn, $sql);
             align-items: center;
         }
 
-        /* Main content styles */
+        /* Gaya untuk konten utama */
         .main-content {
             padding: 6rem 2rem 2rem;
             max-width: 1200px;
@@ -82,7 +88,7 @@ $result = mysqli_query($conn, $sql);
             animation: fadeInUp 1s ease-out;
         }
 
-        /* Search section */
+        /* Gaya untuk bagian pencarian */
         .search-section {
             padding: 3rem 2rem;
             text-align: center;
@@ -139,7 +145,7 @@ $result = mysqli_query($conn, $sql);
             transform: translateY(-1px);
         }
 
-        /* Jobs section */
+        /* Gaya untuk bagian lowongan */
         .jobs-section {
             padding: 2rem;
         }
@@ -212,7 +218,7 @@ $result = mysqli_query($conn, $sql);
             color: var(--text-secondary);
         }
 
-        /* Footer */
+        /* Gaya untuk footer */
         footer {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -222,7 +228,7 @@ $result = mysqli_query($conn, $sql);
             margin-top: 2rem;
         }
 
-        /* Responsive design */
+        /* Desain responsif */
         @media (max-width: 768px) {
             .header-content {
                 padding: 1rem;
@@ -248,7 +254,7 @@ $result = mysqli_query($conn, $sql);
     </style>
 </head>
 <body>
-    <?php include '../partials/header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <main class="main-content">
         <div class="dashboard-container">
@@ -272,7 +278,7 @@ $result = mysqli_query($conn, $sql);
                 <h2>Lowongan Tersedia</h2>
                 <div class="job-grid">
                     <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                        <a href="../Detail/detail_lowongan.php?id=<?= $row['id'] ?>" class="job-card">
+                        <a href="detail_lowongan.php?id=<?= $row['id'] ?>" class="job-card">
                             <div class="job-card-header">
                                 <h3 class="company-name">
                                     <i class="fas fa-building"></i>
@@ -308,6 +314,6 @@ $result = mysqli_query($conn, $sql);
         </div>
     </main>
 
-    <?php include '../partials/footer.php'; ?>
+    <?php include 'footer.php'; ?>
 </body>
 </html>

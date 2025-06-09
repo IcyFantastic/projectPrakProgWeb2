@@ -12,10 +12,10 @@ $baseUrl = '/projectPrakProgWeb2/Project';
                 <div class="logo-text">InfoLoker</div>
             </div>
             <nav class="nav-links">
-                <a href="<?= $baseUrl ?>/Login/login.php">Home</a>
-                <a href="<?= $baseUrl ?>/Tambahan/about.php">Tentang</a>
-                <a href="<?= $baseUrl ?>/Tambahan/vision.php">Visi & Misi</a>
-                <a href="<?= $baseUrl ?>/Tambahan/contact.php">Contact</a>
+                <a href="<?= $baseUrl ?>login.php">Home</a>
+                <a href="<?= $baseUrl ?>about.php">Tentang</a>
+                <a href="<?= $baseUrl ?>vision.php">Visi & Misi</a>
+                <a href="<?= $baseUrl ?>contact.php">Contact</a>
             </nav>
         </div>
     </header>

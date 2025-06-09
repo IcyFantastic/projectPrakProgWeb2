@@ -1,10 +1,10 @@
 <?php
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'perusahaan') {
-    header("Location: ../Login/login.php");
+    header("Location: login.php");
     exit();
 }
-require '../koneksi.php';
+require 'koneksi.php';
 
 $userId = $_SESSION['id'];
 $lowonganId = $_GET['id'] ?? null;
@@ -120,11 +120,11 @@ $pelamarQuery = mysqli_query($conn, "
     </style>
 </head>
 <body>
-    <?php include '../partials/header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <nav class="breadcrumb">
         <div class="breadcrumb-content">
-            <a href="../Dashboard/dashboard_perusahaan.php">Home</a> / <span>Daftar Pelamar</span>
+            <a href="dashboard_perusahaan.php">Home</a> / <span>Daftar Pelamar</span>
         </div>
     </nav>
 
@@ -183,6 +183,6 @@ $pelamarQuery = mysqli_query($conn, "
         </section>
     </div>
 
-    <?php include '../partials/footer.php'; ?>
+    <?php include 'footer.php'; ?>
 </body>
 </html>

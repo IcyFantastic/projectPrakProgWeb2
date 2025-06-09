@@ -1,10 +1,11 @@
 <?php
 session_start();
+// Periksa apakah pengguna sudah login dan memiliki peran sebagai perusahaan
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'perusahaan') {
-    header("Location: ../Login/login.php");
+    header("Location: login.php");
     exit();
 }
-require '../koneksi.php';
+require 'koneksi.php';
 
 $userId = $_SESSION['id'];
 
@@ -29,6 +30,7 @@ $lowongan = mysqli_query($conn, "
     <meta charset="UTF-8">
     <title>Dashboard Perusahaan</title>
     <style>
+        /* Variabel warna dan gaya global */
         :root {
             --primary-color: #6366f1;
             --primary-hover: #5856eb;
@@ -41,6 +43,7 @@ $lowongan = mysqli_query($conn, "
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
+        /* Reset margin dan padding */
         * {
             margin: 0;
             padding: 0;
@@ -48,6 +51,7 @@ $lowongan = mysqli_query($conn, "
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Gaya untuk elemen body */
         body {
             font-family: 'Inter', sans-serif;
             margin: 0;
@@ -55,6 +59,7 @@ $lowongan = mysqli_query($conn, "
             min-height: 100vh;
         }
 
+        /* Container utama dashboard */
         .dashboard-container {
             min-height: 100vh;
             display: flex;
@@ -64,12 +69,12 @@ $lowongan = mysqli_query($conn, "
             padding: 0;
         }
 
-        /* Breadcrumb Styles */
+        /* Gaya breadcrumb */
         .breadcrumb {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            margin-top: 60px; /* Adjust this to match your header height */
+            margin-top: 60px; /* Sesuaikan dengan tinggi header */
         }
 
         .breadcrumb-content {
@@ -94,17 +99,17 @@ $lowongan = mysqli_query($conn, "
             opacity: 1;
         }
 
-        /* Main Content */
+        /* Konten utama */
         .main-content {
             flex: 1;
             padding: 2rem;
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
-            margin-top: 20px; /* Reduced since we now have breadcrumb */
+            margin-top: 20px; /* Dikurangi karena ada breadcrumb */
         }
 
-        /* Welcome Section */
+        /* Bagian selamat datang */
         .welcome-section {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
@@ -146,14 +151,14 @@ $lowongan = mysqli_query($conn, "
             box-shadow: var(--shadow);
         }
 
-        /* Section Title */
+        /* Judul bagian */
         .section-title {
             color: var(--white);
             margin-bottom: 1.5rem;
             font-size: 1.5rem;
         }
 
-        /* Job Cards */
+        /* Kartu lowongan */
         .job-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -190,7 +195,7 @@ $lowongan = mysqli_query($conn, "
             margin-bottom: 1rem;
         }
 
-        /* Tags */
+        /* Tag */
         .job-tags {
             display: flex;
             flex-wrap: wrap;
@@ -206,7 +211,7 @@ $lowongan = mysqli_query($conn, "
             color: var(--text-secondary);
         }
 
-        /* Job Info */
+        /* Informasi lowongan */
         .job-info {
             display: flex;
             justify-content: space-between;
@@ -216,7 +221,7 @@ $lowongan = mysqli_query($conn, "
             border-top: 1px solid var(--border-color);
         }
 
-        /* Action Buttons */
+        /* Tombol aksi */
         .action-buttons {
             display: flex;
             gap: 0.5rem;
@@ -249,7 +254,7 @@ $lowongan = mysqli_query($conn, "
             background-color: var(--primary-color);
         }
 
-        /* Responsive design */
+        /* Desain responsif */
         @media (max-width: 768px) {
             .main-content {
                 padding: 1rem;
@@ -275,11 +280,11 @@ $lowongan = mysqli_query($conn, "
 <body>
 
 <div class="dashboard-container">
-    <?php include '../partials/header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <nav class="breadcrumb">
         <div class="breadcrumb-content">
-            <a href="../Dashboard/dashboard_perusahaan.php">Home</a> / <span>Dashboard Perusahaan</span>
+            <a href="dashboard_perusahaan.php">Home</a> / <span>Dashboard Perusahaan</span>
         </div>
     </nav>
 
@@ -289,7 +294,7 @@ $lowongan = mysqli_query($conn, "
                 <h2>Selamat datang, <?= htmlspecialchars($perusahaan['nama_perusahaan']) ?></h2>
                 <p>📍 Lokasi: <?= $perusahaan['lokasi'] ?></p>
             </div>
-            <button class="action-button" onclick="window.location.href='../Perusahaan/tambah_lowongan.php'">
+            <button class="action-button" onclick="window.location.href='tambah_lowongan.php'">
                 <span class="button-icon">➕</span> Tambah Lowongan
             </button>
         </section>
@@ -315,9 +320,9 @@ $lowongan = mysqli_query($conn, "
                             <p class="applicants">👥 Pelamar: <?= $row['jumlah_pelamar'] ?> orang</p>
                         </div>
                         <div class="action-buttons">
-                            <a href="../Perusahaan/edit_lowongan.php?id=<?= $row['id'] ?>" class="btn edit">✏ Edit</a>
+                            <a href="edit_lowongan.php?id=<?= $row['id'] ?>" class="btn edit">✏ Edit</a>
                             <a href="hapus_lowongan.php?id=<?= $row['id'] ?>" class="btn delete" onclick="return confirm('Yakin ingin menghapus lowongan ini?')">🗑 Hapus</a>
-                            <a href="../pages/lihat_pelamar.php?id=<?= $row['id'] ?>" class="btn view">👀 Lihat Pelamar</a>
+                            <a href="lihat_pelamar.php?id=<?= $row['id'] ?>" class="btn view">👀 Lihat Pelamar</a>
                         </div>
                     </div>
                 <?php endwhile; ?>
@@ -325,7 +330,7 @@ $lowongan = mysqli_query($conn, "
         </section>
     </div>
 
-    <?php include '../partials/footer.php'; ?>
+    <?php include 'footer.php'; ?>
 </div>
 
 </body>

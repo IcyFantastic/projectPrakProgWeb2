@@ -1,4 +1,4 @@
-<?php include '../partials/header.php'; ?>
+<?php include 'header.php'; ?>
 
 <!DOCTYPE html>
 <html lang="id">

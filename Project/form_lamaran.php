@@ -1,24 +1,26 @@
 <?php
 session_start();
+// Periksa apakah pengguna sudah login dan memiliki peran sebagai pelamar
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'pelamar') {
-    header("Location: ../Login/login.php");
+    header("Location: login.php");
     exit();
 }
-require '../koneksi.php';
+require 'koneksi.php';
 
 $userId = $_SESSION['id'];
 $lowonganId = $_GET['id'] ?? null;
 
+// Periksa apakah ID lowongan valid
 if (!$lowonganId) {
-    echo "<script>alert('ID lowongan tidak valid.'); window.location='../Dashboard/dashboard_pelamar.php';</script>";
+    echo "<script>alert('ID lowongan tidak valid.'); window.location='dashboard_pelamar.php';</script>";
     exit();
 }
 
-// Get existing pelamar data if available
+// Ambil data pelamar yang sudah ada jika tersedia
 $getPelamar = mysqli_query($conn, "SELECT * FROM pelamar WHERE user_id = '$userId'");
 $pelamar = mysqli_fetch_assoc($getPelamar);
 
-// Check if already applied
+// Periksa apakah pelamar sudah melamar lowongan ini sebelumnya
 if ($pelamar) {
     $pelamarId = $pelamar['id'];
     $cekQuery = "SELECT * FROM lamaran WHERE pelamar_id = ? AND lowongan_id = ?";
@@ -28,25 +30,26 @@ if ($pelamar) {
     $result = mysqli_stmt_get_result($stmt);
 
     if (mysqli_num_rows($result) > 0) {
-        echo "<script>alert('Anda sudah pernah melamar lowongan ini'); window.location='../Detail/detail_lowongan.php?id=$lowonganId';</script>";
+        echo "<script>alert('Anda sudah pernah melamar lowongan ini'); window.location='detail_lowongan.php?id=$lowonganId';</script>";
         exit();
     }
 }
 
+// Proses pengiriman lamaran
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama = $_POST['nama'];
     $tgl = $_POST['tanggal_lahir'];
-    $email = $_POST['email'];  // Get email from form input
+    $email = $_POST['email'];  // Ambil email dari input form
     $nohp = $_POST['no_hp'];
 
-    // Upload files
+    // Fungsi untuk mengunggah file
     function uploadFile($file, $folder) {
         if ($file['size'] > 0) {
             $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
             $namaFile = uniqid() . "." . $ext;
             $target = "uploads/$folder/" . $namaFile;
             
-            // Create directory if not exists
+            // Buat direktori jika belum ada
             if (!is_dir("uploads/$folder")) {
                 mkdir("uploads/$folder", 0777, true);
             }
@@ -61,10 +64,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $portoName = uploadFile($_FILES['portofolio'], 'portofolio');
     $suratName = uploadFile($_FILES['surat'], 'surat');
 
-    // Start transaction
+    // Mulai transaksi
     mysqli_begin_transaction($conn);
     try {
-        // Insert or update pelamar data
+        // Masukkan atau perbarui data pelamar
         if (!$pelamar) {
             $insertPelamar = mysqli_query($conn, "INSERT INTO pelamar (user_id, nama_lengkap, tanggal_lahir, no_hp, email) 
                 VALUES ('$userId', '$nama', '$tgl', '$nohp', '$email')");
@@ -79,13 +82,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 WHERE id = $pelamarId");
         }
 
-        // Insert lamaran
+        // Masukkan data lamaran
         $insertLamaran = mysqli_query($conn, "INSERT INTO lamaran (pelamar_id, lowongan_id, cv, portofolio, surat_lamaran) 
             VALUES ('$pelamarId', '$lowonganId', '$cvName', '$portoName', '$suratName')");
 
         if ($insertLamaran) {
             mysqli_commit($conn);
-            echo "<script>alert('✅ Berhasil Mengirim Lamaran'); window.location='../Dashboard/dashboard_pelamar.php';</script>";
+            echo "<script>alert('✅ Berhasil Mengirim Lamaran'); window.location='dashboard_pelamar.php';</script>";
             exit();
         }
     } catch (Exception $e) {
@@ -104,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
+        /* Gaya CSS untuk form lamaran */
         :root {
             --primary-color: #6366f1;
             --primary-hover: #5856eb;
@@ -124,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             min-height: 100vh;
         }
 
-        /* Form Section */
+        /* Bagian Form */
         #apply {
             max-width: 800px;
             margin: 6rem auto;
@@ -141,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 1.8rem;
         }
 
-        /* Form Elements */
+        /* Elemen Form */
         form {
             display: flex;
             flex-direction: column;
@@ -261,7 +265,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 0.875rem;
         }
 
-        /* Button Styles */
+        /* Tombol */
         .tombol-lamaran {
             background: var(--primary-color);
             color: var(--white);
@@ -313,7 +317,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             opacity: 1;
         }
 
-        /* Success Message */
+        /* Pesan Sukses */
         #pesanSukses:target {
             background: #dcfce7;
             color: #166534;
@@ -334,7 +338,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             border-top: 1px solid var(--border-color);
         }
 
-        /* Responsive Design */
+        /* Desain Responsif */
         @media (max-width: 768px) {
             #apply {
                 margin: 2rem;
@@ -368,11 +372,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body>
-    <?php include '../partials/header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <nav class="breadcrumb">
         <div class="breadcrumb-content">
-            <a href="../Dashboard/dashboard_pelamar.php">Home</a> / <span>Form Lamaran</span>
+            <a href="dashboard_pelamar.php">Home</a> / <span>Form Lamaran</span>
         </div>
     </nav>
 
@@ -427,7 +431,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="form-actions">
                         <button type="submit" class="tombol-lamaran">Kirim Lamaran</button>
                         <button type="button" class="tombol-lamaran tombol-batal" 
-                                onclick="window.location.href='../Dashboard/dashboard_pelamar.php'">
+                                onclick="window.location.href='dashboard_pelamar.php'">
                             Batal
                         </button>
                     </div>
@@ -436,6 +440,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </section>
     </div>
 
-    <?php include '../partials/footer.php'; ?>
+    <?php include 'footer.php'; ?>
 </body>
 </html>

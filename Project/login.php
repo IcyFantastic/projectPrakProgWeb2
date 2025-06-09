@@ -1,40 +1,41 @@
 <?php
 session_start();
-require '../koneksi.php';
+require 'koneksi.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
-    $email = $_POST['email'];
     $password = $_POST['password'];
-    $role = isset($_POST['role']) ? $_POST['role'] : 'pelamar';
+    $role = isset($_POST['role']) ? $_POST['role'] : '';
 
-    // Validasi username
-    $check = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
-    if (mysqli_num_rows($check) > 0) {
-        $error = "Username sudah digunakan";
-    } else {
-        // Insert user baru
-        $query = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
-        $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, "sss", $username, $password, $role);
-        
-        if (mysqli_stmt_execute($stmt)) {
-            $_SESSION['register_success'] = true;
-            header("Location: login.php");
+    $query = "SELECT * FROM users WHERE username='$username' AND password='$password' AND role='$role'";
+    $result = mysqli_query($conn, $query);
+
+    if ($result && mysqli_num_rows($result) == 1) {
+        $user = mysqli_fetch_assoc($result);
+        $_SESSION['id'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
+
+        if ($user['role'] == 'pelamar') {
+            header("Location: dashboard_pelamar.php");
             exit();
-        } else {
-            $error = "Gagal mendaftar: " . mysqli_error($conn);
+        } elseif ($user['role'] == 'perusahaan') {
+            header("Location: dashboard_perusahaan.php");
+            exit();
         }
+    } else {
+        $error = "Username, password, atau role tidak sesuai";
     }
 }
 ?>
 
+
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InfoLoker - Daftar Akun</title>
+    <title>InfoLoker - Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -42,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 0;
             background-color: #f4f4f4;
         }
-        .register-container {
+        .login-container {
             max-width: 400px;
             margin: 50px auto;
             background: #fff;
@@ -50,15 +51,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .register-header {
+        .login-header {
             text-align: center;
             margin-bottom: 20px;
         }
-        .register-title {
+        .login-title {
             font-size: 24px;
             margin: 0;
         }
-        .register-subtitle {
+        .login-subtitle {
             font-size: 14px;
             color: #666;
         }
@@ -79,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             transform: translateY(-50%);
             color: #aaa;
         }
-        .register-btn {
+        .login-btn {
             width: 100%;
             padding: 10px;
             background-color: #007bff;
@@ -88,18 +89,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 4px;
             cursor: pointer;
         }
-        .register-btn:hover {
+        .login-btn:hover {
             background-color: #0056b3;
         }
-        .login-link {
+        .register-link {
             text-align: center;
             margin-top: 10px;
         }
-        .login-link a {
+        .register-link a {
             color: #007bff;
             text-decoration: none;
         }
-        .login-link a:hover {
+        .register-link a:hover {
             text-decoration: underline;
         }
     </style>
@@ -119,17 +120,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
 </head>
 <body>
-    <?php include '../partials/header.php'; ?>
+    <?php include 'header.php'; ?>
 
     <main class="main-content">
-        <div class="register-container">
-            <div class="register-header">
-                <h1 class="register-title">Daftar Akun</h1>
-                <p class="register-subtitle">Buat akun InfoLoker baru</p>
+        <div class="login-container">
+            <div class="login-header">
+                <h1 class="login-title">Selamat Datang</h1>
+                <p class="login-subtitle">Masuk ke akun InfoLoker Anda</p>
             </div>
 
+            <!-- Error Mesasage Display -->
             <?php if(isset($error)): ?>
-                <div class="error-message">
+                <div class="error-message" style="color: red; text-align: center; margin-bottom: 10px;">
                     <?php echo $error; ?>
                 </div>
             <?php endif; ?>
@@ -143,35 +145,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </button>
             </div>
 
-            <form class="register-form" method="POST" action="">
+            <form class="login-form" method="POST" action="">
                 <input type="hidden" name="role" id="selectedRole" value="pelamar">
-                
                 <div class="input-group">
-                    <input type="text" class="input-field" name="username" placeholder="Username" required>
+                    <input type="text" class="input-field" name="username" placeholder="Masukkan username" required>
                     <i class='bx bxs-user input-icon'></i>
                 </div>
-
-                <div class="input-group">
-                    <input type="email" class="input-field" name="email" placeholder="Email" required>
-                    <i class='bx bxs-envelope input-icon'></i>
-                </div>
-
                 <div class="input-group">
                     <input type="password" class="input-field" name="password" placeholder="Kata Sandi" required>
                     <i class='bx bxs-lock-alt input-icon'></i>
                 </div>
 
-                <button type="submit" class="register-btn">
-                    <span class="btn-text">Daftar</span>
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember">
+                        Ingat Saya
+                    </label>
+                    <a href="reset-password.php" class="forgot-password">Lupa Kata Sandi?</a>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <span class="btn-text">Masuk</span>
+                    <div class="loading"></div>
                 </button>
 
-                <div class="login-link">
-                    Sudah punya akun? <a href="login.php">Masuk</a>
+                <div class="register-link">
+                    Belum punya akun? <a href="register.php">Daftar Sekarang</a>
                 </div>
             </form>
         </div>
     </main>
 
-    <?php include '../partials/footer.php'; ?>
+    <?php include 'footer.php'; ?>
 </body>
 </html>

@@ -1,10 +1,10 @@
 <?php
 session_start();
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'perusahaan') {
-    header("Location: ../Login/login.php");
+    header("Location: login.php");
     exit();
 }
-require '../koneksi.php';
+require 'koneksi.php';
 
 $userId = $_SESSION['id'];
 
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         VALUES ('$perusahaanId', '$judul', '$lokasi', '$jenis', '$level', '$pendidikan', '$gaji', '$deskripsi', '$keahlian', '$kualifikasi', CURDATE())");
 
     if ($insert) {
-        echo "<script>alert('✅ Lowongan berhasil ditambahkan!'); window.location='../Dashboard/dashboard_perusahaan.php';</script>";
+        echo "<script>alert('✅ Lowongan berhasil ditambahkan!'); window.location='dashboard_perusahaan.php';</script>";
         exit();
     } else {
         echo "Gagal menambahkan lowongan: " . mysqli_error($conn);
@@ -111,11 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-<?php include '../partials/header.php'; ?>
+<?php include 'header.php'; ?>
 
 <nav class="breadcrumb">
     <div class="breadcrumb-content">
-        <a href="../Dashboard/dashboard_perusahaan.php">Home</a> / <span>Tambah Lowongan</span>
+        <a href="dashboard_perusahaan.php">Home</a> / <span>Tambah Lowongan</span>
     </div>
 </nav>
 
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </section>
 
-<?php include '../partials/footer.php'; ?>
+<?php include 'footer.php'; ?>
 
 </body>
 </html>
