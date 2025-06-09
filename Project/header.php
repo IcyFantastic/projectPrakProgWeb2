@@ -2,23 +2,36 @@
 if (session_status() === PHP_SESSION_NONE) session_start(); 
 
 // Definisikan base URL
-$baseUrl = '/projectPrakProgWeb2/Project';
+$baseUrl = "//" . $_SERVER['HTTP_HOST'] . "/";
+
+// Tentukan URL Home berdasarkan peran pengguna
+$homeUrl = $baseUrl . "login.php"; // Default ke halaman login
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] === 'pelamar') {
+        $homeUrl = $baseUrl . "dashboard_pelamar.php";
+    } elseif ($_SESSION['role'] === 'perusahaan') {
+        $homeUrl = $baseUrl . "dashboard_perusahaan.php";
+    }
+}
 ?>
 
 <header>
-        <div class="header-content">
-            <div class="logo-section">
-                <div class="logo">IL</div>
-                <div class="logo-text">InfoLoker</div>
-            </div>
-            <nav class="nav-links">
-                <a href="<?= $baseUrl ?>login.php">Home</a>
-                <a href="<?= $baseUrl ?>about.php">Tentang</a>
-                <a href="<?= $baseUrl ?>vision.php">Visi & Misi</a>
-                <a href="<?= $baseUrl ?>contact.php">Contact</a>
-            </nav>
+    <div class="header-content">
+        <div class="logo-section">
+            <div class="logo">IL</div>
+            <div class="logo-text">InfoLoker</div>
         </div>
-    </header>
+        <nav class="nav-links">
+            <a href="<?= $homeUrl ?>">Home</a>
+            <a href="<?= $baseUrl ?>about.php">Tentang</a>
+            <a href="<?= $baseUrl ?>vision.php">Visi & Misi</a>
+            <a href="<?= $baseUrl ?>contact.php">Contact</a>
+            <?php if (isset($_SESSION['username'])): ?>
+                <a href="<?= $baseUrl ?>logout.php" class="logout-btn">Logout</a>
+            <?php endif; ?>
+        </nav>
+    </div>
+</header>
 
 <style>
     /* Header */
@@ -111,50 +124,18 @@ $baseUrl = '/projectPrakProgWeb2/Project';
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
-            border-radius: 25px;
-            opacity: 0;
-            transition: all 0.4s ease;
-            z-index: -1;
-        }
-
-        .nav-links a:hover {
+        .nav-links a.logout-btn {
+            background: #ef4444;
             color: #ffffff;
-            transform: translateY(-3px) scale(1.05);
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
         }
 
-        .nav-links a:hover::before {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #ffffff, rgba(255, 255, 255, 0.5));
-            border-radius: 2px;
-            transition: all 0.4s ease;
-            transform: translateX(-50%);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
-        }
-
-        .nav-links a:active {
-            transform: translateY(-1px) scale(1.02);
+        .nav-links a.logout-btn:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
         }
 </style>

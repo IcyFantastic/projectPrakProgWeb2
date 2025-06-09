@@ -36,88 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InfoLoker - Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .login-container {
-            max-width: 400px;
-            margin: 50px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .login-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .login-title {
-            font-size: 24px;
-            margin: 0;
-        }
-        .login-subtitle {
-            font-size: 14px;
-            color: #666;
-        }
-        .input-group {
-            margin-bottom: 15px;
-            position: relative;
-        }
-        .input-field {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .input-icon {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            color: #aaa;
-        }
-        .login-btn {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .login-btn:hover {
-            background-color: #0056b3;
-        }
-        .register-link {
-            text-align: center;
-            margin-top: 10px;
-        }
-        .register-link a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-    </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const roleButtons = document.querySelectorAll('.role-btn');
-            const selectedRoleInput = document.getElementById('selectedRole');
-
-            roleButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    roleButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    selectedRoleInput.value = this.getAttribute('data-role');
-                });
-            });
-        });
-    </script>
+    <link rel="stylesheet" href="css/login.css">
+    <script src="js/login.js"></script>
 </head>
 <body>
     <?php include 'header.php'; ?>
@@ -137,38 +57,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php endif; ?>
 
             <div class="role-selection">
-                <button type="button" class="role-btn active" data-role="pelamar">
-                    <i class='bx bxs-user'></i> Pelamar
-                </button>
-                <button type="button" class="role-btn" data-role="perusahaan">
-                    <i class='bx bxs-briefcase'></i> Perusahaan
-                </button>
+                <button type="button" class="role-btn active" data-role="pelamar">Pelamar</button>
+                <button type="button" class="role-btn" data-role="perusahaan">Perusahaan</button>
             </div>
 
             <form class="login-form" method="POST" action="">
                 <input type="hidden" name="role" id="selectedRole" value="pelamar">
                 <div class="input-group">
                     <input type="text" class="input-field" name="username" placeholder="Masukkan username" required>
-                    <i class='bx bxs-user input-icon'></i>
+                    <i class="input-icon">👤</i>
                 </div>
                 <div class="input-group">
                     <input type="password" class="input-field" name="password" placeholder="Kata Sandi" required>
-                    <i class='bx bxs-lock-alt input-icon'></i>
+                    <i class="input-icon">🔒</i>
                 </div>
-
                 <div class="form-options">
-                    <label class="remember-me">
-                        <input type="checkbox" name="remember">
-                        Ingat Saya
-                    </label>
-                    <a href="reset-password.php" class="forgot-password">Lupa Kata Sandi?</a>
+                    <div class="remember-me">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <label for="rememberMe">Ingat saya</label>
+                    </div>
+                    <div class="reset-password-link">
+                        <a href="reset-password.php">Lupa kata sandi?</a>
+                    </div>
                 </div>
-
                 <button type="submit" class="login-btn">
                     <span class="btn-text">Masuk</span>
-                    <div class="loading"></div>
+                    <span class="loading"></span>
                 </button>
-
                 <div class="register-link">
                     Belum punya akun? <a href="register.php">Daftar Sekarang</a>
                 </div>

@@ -43,71 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Tambah Lowongan</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .breadcrumb {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px;
-        }
-        .breadcrumb-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-        }
-        .breadcrumb-content a {
-            color: #fff;
-            text-decoration: none;
-            margin-right: 5px;
-        }
-        .breadcrumb-content span {
-            margin-left: 5px;
-        }
-        #apply {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        #apply h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        form label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        form input, form select, form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        form textarea {
-            resize: none;
-        }
-        .tombol-lamaran {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .tombol-lamaran:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="css/lowongan.css">
 </head>
 <body>
 

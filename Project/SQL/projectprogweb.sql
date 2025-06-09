@@ -159,8 +159,7 @@ INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
 -- Add email column to users table
 --
 ALTER TABLE `users`
-ADD COLUMN `email` varchar(255) NOT NULL AFTER `username`,
-ADD UNIQUE KEY `email` (`email`);
+ADD COLUMN `email` varchar(255) NOT NULL AFTER `username`;
 
 --
 -- Update existing users with their emails
