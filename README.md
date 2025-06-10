@@ -1,147 +1,163 @@
-# 🚀 Job Portal Web Application
+# 🚀 Aplikasi Portal Lowongan Kerja
 
-## 📋 Overview
-A modern job portal application connecting job seekers with companies, built with PHP and MySQL. Features intuitive dashboards for companies and job seekers! ✨
+## 📋 Ringkasan
+Aplikasi portal lowongan kerja modern yang menghubungkan pencari kerja dengan perusahaan, dibangun menggunakan PHP dan MySQL. Fitur lengkap dengan dashboard intuitif untuk perusahaan dan pencari kerja! ✨
 
-## 🎯 Features
+## 🎯 Fitur
 
-### 💼 For Companies
-- 🔐 Secure authentication system
-- 📊 Dynamic company dashboard
-- ➕ Post new job listings
-- 📝 Edit existing job listings
-- 👥 View and manage applicants
-- 🏢 Company profile management
-- 📑 Document review system
+### 💼 Untuk Perusahaan
+- 🔐 Sistem autentikasi yang aman
+- 📊 Dashboard perusahaan yang dinamis
+- ➕ Tambah lowongan pekerjaan baru
+- 📝 Edit lowongan pekerjaan yang ada
+- 👥 Lihat dan kelola pelamar
+- 🏢 Manajemen profil perusahaan
+- 📑 Sistem review dokumen pelamar
 
-### 👤 For Job Seekers
-- 🔑 User authentication
-- 🎯 Personalized dashboard
-- 🔍 Advanced job search
-- 📨 One-click job applications
-- 📤 Document management
-- 📈 Application tracking
+### 👤 Untuk Pencari Kerja
+- 🔑 Sistem autentikasi pengguna
+- 🎯 Dashboard yang dipersonalisasi
+- 🔍 Pencarian lowongan kerja yang canggih
+- 📨 Lamar pekerjaan dengan satu klik
+- 📤 Manajemen dokumen lamaran
+- 📈 Pelacakan status lamaran
 
-## 🛠️ Technical Stack
+## 🛠️ Teknologi yang Digunakan
 - 🎨 **Frontend:** HTML5, CSS3, JavaScript
 - ⚙️ **Backend:** PHP
 - 💾 **Database:** MySQL
 - 🖥️ **Server:** XAMPP
 
-## 📁 Project Structure
+## 📁 Struktur Project
 ```
 projectPrakProgWeb2/
 ├── 📂 Project/
-│   ├── 📊 Dashboard/
-│   │   ├── dashboard_pelamar.php
-│   │   └── dashboard_perusahaan.php
-│   ├── 🔐 Halaman_Login/
-│   │   ├── login.php
-│   │   └── register.php
-│   ├── 🏠 Halaman_Utama/
-│   │   ├── index.php
-│   │   └── home.php
-│   ├── 📑 pages/
-│   │   ├── lihat_pelamar.php
-│   │   └── apply_job.php
-│   ├── 🧩 partials/
-│   │   ├── header.php
-│   │   └── footer.php
-│   └── 🔌 koneksi.php
+│   ├── 📂 css/
+│   │   ├── login.css
+│   │   ├── detail.css
+│   │   ├── dashboard_pelamar.css
+│   │   ├── dashboard_perusahaan.css
+│   │   ├── lamaran.css
+│   │   ├── lowongan.css
+│   │   ├── pelamar.css
+│   │   ├── register.css
+│   │   ├── reset-password.css
+│   │   └── tambahan.css
+│   ├── 📂 js/
+│   │   ├── login.js
+│   │   └── register.js
+│   ├── 📂 Gambar/
+│   │   └── 
+│   ├── 📂 SQL/
+│   │   └── progweb.sql
+│   dashboard_pelamar.php
+│   dashboard_perusahaan.php
+│   dashboard_awal.php
+│   login.php
+│   register.php
+│   reset-password.php
+│   logout.php
+│   about.php
+│   vision.php
+│   contact.php
+│   detail_lowongan.php
+│   tambah_lowongan.php
+│   edit_lowongan.php
+│   lihat_pelamar.php
+│   header.php
+│   footer.php
+│   koneksi.php
 └── 📝 README.md
 ```
 
-## ⚡ Installation Guide
+## ⚡ Panduan Instalasi
 
-### Prerequisites
-- 🖥️ XAMPP installed
-- 🌐 Web browser
-- 📝 Text editor (VS Code recommended)
+### Prasyarat
+- 🖥️ XAMPP terinstal
+- 🌐 Browser web
+- 📝 Editor teks (disarankan VS Code)
 
-### Steps
-1. 📥 **Install XAMPP**
-   ```bash
-   # Start Apache and MySQL services
-   ```
+### Langkah-langkah
+1. 📥 **Instal XAMPP**
+   - Jalankan layanan Apache dan MySQL.
 
 2. 📋 **Clone Repository**
    ```bash
    git clone [repository-url] C:\xampp\htdocs\projectPrakProgWeb2
    ```
 
-3. 💾 **Database Setup**
-   - Open phpMyAdmin
-   - Create new database
-   - Import schema from `database.sql`
+3. 💾 **Setup Database**
+   - Buka phpMyAdmin.
+   - Buat database baru.
+   - Import file `SQL/progweb.sql`.
 
-4. ⚙️ **Configure Connection**
-   Edit `koneksi.php`:
+4. ⚙️ **Konfigurasi Koneksi**
+   Edit file `koneksi.php`:
    ```php
    $host = "localhost";
-   $username = "your_username";
-   $password = "your_password";
-   $database = "your_database_name";
+   $user = "root";
+   $pass = "";
+   $db = "progweb";
    ```
 
-5. 🌐 **Access Application**
+5. 🌐 **Akses Aplikasi**
+   Buka URL berikut di browser:
    ```
    http://localhost/projectPrakProgWeb2/
    ```
 
-## 📱 Key Features
+   Atau
+   ```
+   miniproject.local
+   ```
 
-### For Companies 🏢
-1. **Job Management**
-   - Create job listings
-   - Edit postings
-   - Review applications
+## 📱 Fitur Utama
 
-2. **Applicant Tracking**
-   - View candidate profiles
-   - Download resumes
-   - Track application status
+### Untuk Perusahaan 🏢
+1. **Manajemen Lowongan**
+   - Tambah lowongan pekerjaan.
+   - Edit lowongan yang ada.
+   - Hapus lowongan (jika belum ada pelamar).
 
-### For Job Seekers 👤
-1. **Profile Management**
-   - Create/edit profile
-   - Upload documents
-   - Track applications
+2. **Pelacakan Pelamar**
+   - Lihat profil pelamar.
+   - Unduh dokumen pelamar.
+   - Pantau status lamaran.
 
-2. **Job Search**
-   - Filter by category
-   - Search by location
-   - Quick apply feature
+### Untuk Pencari Kerja 👤
+1. **Manajemen Profil**
+   - Buat dan edit profil.
+   - Unggah dokumen lamaran.
+   - Pantau status lamaran.
 
-## 🔧 Development
+2. **Pencarian Lowongan**
+   - Filter berdasarkan kategori.
+   - Cari berdasarkan lokasi.
+   - Lamar pekerjaan dengan cepat.
 
-### Running Locally
+## 🔧 Pengembangan
+
+### Menjalankan Secara Lokal
 ```bash
-# Start XAMPP
-# Navigate to project folder
+# Jalankan XAMPP
+# Navigasi ke folder project
 cd C:\xampp\htdocs\projectPrakProgWeb2
 ```
 
-### Database Updates
-```sql
--- Create tables
-CREATE TABLE users...
-```
-
-## 👥 Contributors
+## 👥 Kontributor
 - 👨‍💻 Laurensius Rio Darryl [71231022]
-- 👩‍💻 Hansel Ivano Supratman[71231039]
+- 👩‍💻 Hansel Ivano Supratman [71231039]
 
-
-## 🤝 Support
+## 🤝 Dukungan
 - 📧 Email: support@example.com
-- 💬 Issues: GitHub Issues
-- 📚 Wiki: [Project Wiki]
+- 💬 Masalah: GitHub Issues
+- 📚 Dokumentasi: [Wiki Project]
 
-## 🔄 Version History
-- 🆕 v1.0.0 - Initial Release
-- 📅 Last Updated: [06 Juni 2025]
+## 🔄 Riwayat Versi
+- 🆕 v1.0.0 - Rilis Awal
+- 📅 Terakhir Diperbarui: 11 Juni 2025
 
 ---
-Made with ❤️ by [Kelompok 8]
+Dibuat dengan ❤️ oleh [Kelompok 8]
 
 ### 🌟 Star us on GitHub if this project helps you!
