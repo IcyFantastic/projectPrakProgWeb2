@@ -17,6 +17,17 @@ $perusahaanId = $perusahaan['id'];
 // Proses penghapusan lowongan
 if (isset($_GET['delete_id'])) {
     $deleteId = intval($_GET['delete_id']);
+    
+    // Check if there are any applicants
+    $checkApplicants = mysqli_query($conn, "SELECT COUNT(*) as total FROM lamaran WHERE lowongan_id = $deleteId");
+    $applicantCount = mysqli_fetch_assoc($checkApplicants)['total'];
+    
+    if ($applicantCount > 0) {
+        echo "<script>alert('❌ Lowongan tidak dapat dihapus karena sudah ada pelamar!'); window.location='dashboard_perusahaan.php';</script>";
+        exit();
+    }
+    
+    // If no applicants, proceed with deletion
     $deleteQuery = mysqli_query($conn, "DELETE FROM lowongan WHERE id = $deleteId AND perusahaan_id = $perusahaanId");
 
     if ($deleteQuery) {
@@ -91,7 +102,9 @@ $lowongan = mysqli_query($conn, "
                         </div>
                         <div class="action-buttons">
                             <a href="edit_lowongan.php?id=<?= $row['id'] ?>" class="btn edit">✏ Edit</a>
-                            <a href="dashboard_perusahaan.php?delete_id=<?= $row['id'] ?>" class="btn delete" onclick="return confirm('Yakin ingin menghapus lowongan ini?')">🗑 Hapus</a>
+                            <a href="#" class="btn delete" onclick="handleDelete(<?= $row['id'] ?>, <?= $row['jumlah_pelamar'] ?>)">
+                                🗑 Hapus
+                            </a>
                             <a href="lihat_pelamar.php?id=<?= $row['id'] ?>" class="btn view">👀 Lihat Pelamar</a>
                         </div>
                     </div>
@@ -103,5 +116,17 @@ $lowongan = mysqli_query($conn, "
     <?php include 'footer.php'; ?>
 </div>
 
+<script>
+function handleDelete(id, jumlahPelamar) {
+    if (jumlahPelamar > 0) {
+        alert('❌ Lowongan tidak dapat dihapus karena sudah ada ' + jumlahPelamar + ' pelamar!');
+        return false;
+    }
+    
+    if (confirm('Yakin ingin menghapus lowongan ini?')) {
+        window.location.href = 'dashboard_perusahaan.php?delete_id=' + id;
+    }
+}
+</script>
 </body>
 </html>

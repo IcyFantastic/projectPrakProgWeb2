@@ -89,32 +89,33 @@ textarea {
 
 /* Breadcrumb Styles */
 .breadcrumb {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    margin-top: 60px; /* Adjust this to match your header height */
+    background: #f8f9fa;
+    padding: 1rem 2rem;
+    margin-top: 70px; /* memberikan jarak dari fixed header */
+    border-bottom: 1px solid #e9ecef;
 }
 
 .breadcrumb-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 2rem;
 }
 
 .breadcrumb a {
-    color: var(--white);
+    color: #007bff;
     text-decoration: none;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-}
-
-.breadcrumb span {
-    color: var(--white);
-    opacity: 0.6;
+    transition: color 0.3s ease;
 }
 
 .breadcrumb a:hover {
-    opacity: 1;
+    color: #0056b3;
+}
+
+.breadcrumb span {
+    color: #6c757d;
+}
+
+.main-content {
+    padding-top: 2rem; /* memberikan jarak dari breadcrumb */
 }
 
 /* Responsive Design */

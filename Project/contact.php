@@ -19,7 +19,7 @@
                         <div class="info-card">
                             <i class='bx bxs-map card-icon'></i>
                             <h3>Alamat</h3>
-                            <p>Jl. Telkom University No. 1<br>Bandung, Jawa Barat 40257</p>
+                            <p>UKDW Jl. Dr. Wahidin Sudirohusodo No.5-25, Kotabaru, Kec. Gondokusuman, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55224</p>
                         </div>
                         <div class="info-card">
                             <i class='bx bxs-phone card-icon'></i>

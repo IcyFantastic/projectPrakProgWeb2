@@ -22,11 +22,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } elseif ($user['role'] == 'perusahaan') {
             header("Location: dashboard_perusahaan.php");
             exit();
+        } elseif ($user['role'] == '') {
+            header("Location: dashboard_awal.php");
+            exit();
         }
     } else {
         $error = "Username, password, atau role tidak sesuai";
     }
 }
+
 ?>
 
 

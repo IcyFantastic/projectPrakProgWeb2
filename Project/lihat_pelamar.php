@@ -34,9 +34,10 @@ $pelamarQuery = mysqli_query($conn, "
         pelamar.nama_lengkap,
         pelamar.tanggal_lahir,
         pelamar.no_hp,
-        pelamar.email
+        users.email      
     FROM lamaran
     JOIN pelamar ON lamaran.pelamar_id = pelamar.id
+    JOIN users ON pelamar.user_id = users.id    -- Join with users table
     WHERE lamaran.lowongan_id = $lowonganId
 ");
 ?>
@@ -80,7 +81,7 @@ $pelamarQuery = mysqli_query($conn, "
                             <?php while ($p = mysqli_fetch_assoc($pelamarQuery)): ?>
                             <tr>
                                 <td><?= htmlspecialchars($p['nama_lengkap']) ?></td>
-                                <td><?= htmlspecialchars($p['email']) ?></td>
+                                <td><?= htmlspecialchars($p['email']) ?></td>  <!-- This will now show email from users table -->
                                 <td><?= htmlspecialchars($p['no_hp']) ?></td>
                                 <td><?= htmlspecialchars($p['tanggal_lahir']) ?></td>
                                 <td class="document-cell">

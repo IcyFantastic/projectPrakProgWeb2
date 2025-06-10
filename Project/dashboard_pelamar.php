@@ -7,6 +7,12 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'pelamar') {
 }
 require 'koneksi.php';
 
+// Ambil data user yang sedang login
+$username = $_SESSION['username'];
+$query_user = "SELECT * FROM users WHERE username = '$username'";
+$result_user = mysqli_query($conn, $query_user);
+$user = mysqli_fetch_assoc($result_user);
+
 // Ambil kata kunci pencarian dari URL
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
@@ -41,6 +47,7 @@ $result = mysqli_query($conn, $sql);
     <main class="main-content">
         <div class="dashboard-container">
             <section class="search-section">
+                <h2>Selamat datang, <?= htmlspecialchars($user['username']) ?></h2>
                 <h1>Temukan Pekerjaan Impianmu</h1>
                 <p class="search-subtitle">Jelajahi ribuan lowongan kerja sesuai dengan keahlianmu</p>
                 <form method="GET" action="" class="search-form">

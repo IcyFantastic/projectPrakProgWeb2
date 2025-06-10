@@ -19,34 +19,44 @@ body {
 }
 
 /* Breadcrumb Styles */
-.breadcrumb {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    margin-top: 60px; /* Adjust this to match your header height */
+/* ...existing code... */
+
+/* Breadcrumb Styles */
+.breadcrumb{
+    background: #f8f9fa;
+    padding: 1rem 2rem;
+    margin-top: 70px; /* memberikan jarak dari fixed header */
+    border-bottom: 1px solid #e9ecef;
+    width: 100%;
 }
 
 .breadcrumb-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .breadcrumb a {
-    color: var(--white);
+    color: #007bff;
     text-decoration: none;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-}
-
-.breadcrumb span {
-    color: var(--white);
-    opacity: 0.6;
+    transition: color 0.3s ease;
+    font-size: 0.95rem;
 }
 
 .breadcrumb a:hover {
-    opacity: 1;
+    color: #0056b3;
 }
+
+.breadcrumb span {
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+
+
+/* ...existing code... */
 
 /* Main Content */
 .main-content {
@@ -55,6 +65,7 @@ body {
     margin: 1rem auto;
     padding: 0 2rem;
     min-height: calc(100vh - 180px); /* Adjust based on header + footer height */
+    padding-top: 2rem;
 }
 
 /* Section Title */

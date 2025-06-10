@@ -35,69 +35,77 @@ if ($pelamar) {
     }
 }
 
-// Proses pengiriman lamaran
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nama = $_POST['nama'];
-    $tgl = $_POST['tanggal_lahir'];
-    $email = $_POST['email'];  // Ambil email dari input form
-    $nohp = $_POST['no_hp'];
-
-    // Fungsi untuk mengunggah file
-    function uploadFile($file, $folder) {
-        if ($file['size'] > 0) {
-            $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
-            $namaFile = uniqid() . "." . $ext;
-            $target = "uploads/$folder/" . $namaFile;
-            
-            // Buat direktori jika belum ada
-            if (!is_dir("uploads/$folder")) {
-                mkdir("uploads/$folder", 0777, true);
-            }
-            
-            move_uploaded_file($file['tmp_name'], $target);
-            return $namaFile;
+// Update the uploadFile function with size validation
+function uploadFile($file, $folder) {
+    // Maximum file size 5MB
+    $maxSize = 5 * 1024 * 1024;
+    
+    if ($file['size'] > 0) {
+        // Validate file size
+        if ($file['size'] > $maxSize) {
+            throw new Exception("File " . basename($file['name']) . " melebihi batas maksimal 5MB!");
         }
-        return null;
+
+        $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $namaFile = uniqid() . "." . $ext;
+        $target = "uploads/$folder/" . $namaFile;
+        
+        // Create directory if not exists
+        if (!is_dir("uploads/$folder")) {
+            mkdir("uploads/$folder", 0777, true);
+        }
+        
+        // Move uploaded file
+        if (move_uploaded_file($file['tmp_name'], $target)) {
+            return $namaFile; // Return only filename for DB storage
+        } else {
+            throw new Exception("Gagal mengupload file " . basename($file['name']));
+        }
     }
+    return null;
+}
 
-    $cvName = uploadFile($_FILES['cv'], 'cv');
-    $portoName = uploadFile($_FILES['portofolio'], 'portofolio');
-    $suratName = uploadFile($_FILES['surat'], 'surat');
-
-    // Mulai transaksi
-    mysqli_begin_transaction($conn);
+// Update the form processing section
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
-        // Masukkan atau perbarui data pelamar
+        $nama = $_POST['nama'];
+        $tgl = $_POST['tanggal_lahir'];
+        $email = $_POST['email'];
+        $nohp = $_POST['no_hp'];
+
+        // Process file uploads with validation
+        $cvName = uploadFile($_FILES['cv'], 'cv');
+        $portoName = uploadFile($_FILES['portofolio'], 'portofolio');
+        $suratName = uploadFile($_FILES['surat'], 'surat');
+
+        // Start transaction
+        mysqli_begin_transaction($conn);
+
+        // Insert or update pelamar data
         if (!$pelamar) {
-            $insertPelamar = mysqli_query($conn, "INSERT INTO pelamar (user_id, nama_lengkap, tanggal_lahir, no_hp, email) 
-                VALUES ('$userId', '$nama', '$tgl', '$nohp', '$email')");
+            $stmt = mysqli_prepare($conn, "INSERT INTO pelamar (user_id, nama_lengkap, tanggal_lahir, no_hp, email) VALUES (?, ?, ?, ?, ?)");
+            mysqli_stmt_bind_param($stmt, "issss", $userId, $nama, $tgl, $nohp, $email);
+            mysqli_stmt_execute($stmt);
             $pelamarId = mysqli_insert_id($conn);
         } else {
             $pelamarId = $pelamar['id'];
-            $updatePelamar = mysqli_query($conn, "UPDATE pelamar SET 
-                nama_lengkap = '$nama',
-                tanggal_lahir = '$tgl',
-                no_hp = '$nohp',
-                email = '$email'
-                WHERE id = $pelamarId");
+            $stmt = mysqli_prepare($conn, "UPDATE pelamar SET nama_lengkap = ?, tanggal_lahir = ?, no_hp = ?, email = ? WHERE id = ?");
+            mysqli_stmt_bind_param($stmt, "ssssi", $nama, $tgl, $nohp, $email, $pelamarId);
+            mysqli_stmt_execute($stmt);
         }
 
-        // Masukkan data lamaran
-        $insertLamaran = mysqli_query($conn, "INSERT INTO lamaran (pelamar_id, lowongan_id, cv, portofolio, surat_lamaran) 
-            VALUES ('$pelamarId', '$lowonganId', '$cvName', '$portoName', '$suratName')");
-
-        if ($insertLamaran) {
+        // Insert lamaran with file paths
+        $stmt = mysqli_prepare($conn, "INSERT INTO lamaran (pelamar_id, lowongan_id, cv, portofolio, surat_lamaran) VALUES (?, ?, ?, ?, ?)");
+        mysqli_stmt_bind_param($stmt, "iisss", $pelamarId, $lowonganId, $cvName, $portoName, $suratName);
+        
+        if (mysqli_stmt_execute($stmt)) {
             mysqli_commit($conn);
             echo "<script>alert('✅ Berhasil Mengirim Lamaran'); window.location='dashboard_pelamar.php';</script>";
             exit();
         }
     } catch (Exception $e) {
         mysqli_rollback($conn);
-        echo "Error: " . $e->getMessage();
-    }
-
-    if (!$insertPelamar) {
-        die("Error inserting pelamar: " . mysqli_error($conn));
+        echo "<script>alert('Error: " . $e->getMessage() . "');</script>";
     }
 }
 ?>
@@ -153,19 +161,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="form-group">
                         <label for="cv">Unggah CV (PDF/DOCX)</label>
                         <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
-                        <small>Format yang didukung: PDF, DOC, DOCX</small>
+                        <small>Format yang didukung: PDF, DOC, DOCX. Maksimal 5MB</small>
                     </div>
 
                     <div class="form-group">
                         <label for="portofolio">Unggah Portofolio (Opsional)</label>
                         <input type="file" id="portofolio" name="portofolio" accept=".pdf">
-                        <small>Format yang didukung: PDF</small>
+                        <small>Format yang didukung: PDF. Maksimal 5MB</small>
                     </div>
 
                     <div class="form-group">
                         <label for="surat">Unggah Surat Lamaran (Opsional)</label>
                         <input type="file" id="surat" name="surat" accept=".pdf">
-                        <small>Format yang didukung: PDF</small>
+                        <small>Format yang didukung: PDF. Maksimal 5MB</small>
                     </div>
 
                     <div class="form-actions">
