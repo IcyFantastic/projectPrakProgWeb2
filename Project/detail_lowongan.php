@@ -1,9 +1,5 @@
 <?php
 session_start();
-if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'pelamar') {
-    header("Location: login.php");
-    exit();
-}
 require 'koneksi.php';
 
 if (!isset($_GET['id'])) {
@@ -12,10 +8,10 @@ if (!isset($_GET['id'])) {
 }
 
 $idLowongan = $_GET['id'];
-$userId = $_SESSION['id'];
+$userId = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 
 // Ambil detail lowongan
-$query = "SELECT l.*, p.nama_perusahaan, p.lokasi AS lokasi_perusahaan, p.logo 
+$query = "SELECT l.*, p.nama_perusahaan, p.lokasi AS lokasi_perusahaan, p.logo, p.company_desc 
           FROM lowongan l 
           JOIN perusahaan p ON l.perusahaan_id = p.id 
           WHERE l.id = $idLowongan";
@@ -28,12 +24,15 @@ if (!$lowongan) {
 }
 
 // Cek apakah user sudah melamar
-$cekLamaran = mysqli_query($conn, "
-    SELECT * FROM lamaran 
-    WHERE pelamar_id = (SELECT id FROM pelamar WHERE user_id = $userId) 
-    AND lowongan_id = $idLowongan
-");
-$sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
+$sudahMelamar = false;
+if ($userId) {
+    $cekLamaran = mysqli_query($conn, "
+        SELECT * FROM lamaran 
+        WHERE pelamar_id = (SELECT id FROM pelamar WHERE user_id = $userId) 
+        AND lowongan_id = $idLowongan
+    ");
+    $sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
+}
 ?>
 
 <!DOCTYPE html>
@@ -42,6 +41,12 @@ $sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($lowongan['judul']) ?> - <?= htmlspecialchars($lowongan['nama_perusahaan']) ?></title>
     <link rel="stylesheet" href="css/detail.css">
+    <script>
+        function redirectToLogin() {
+            alert("Silahkan Login sebelum melamar");
+            window.location.href = "login.php";
+        }
+    </script>
 </head>
 <body>
 
@@ -55,12 +60,12 @@ $sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
         <h1><?= htmlspecialchars($lowongan['judul']) ?></h1>
         <p class="company-name">🏢 <a href="#"><?= htmlspecialchars($lowongan['nama_perusahaan']) ?></a></p>
 
-        <?php if ($sudahMelamar): ?>
+        <?php if (!isset($_SESSION['username'])): ?>
+            <button class="apply-btn" onclick="redirectToLogin()">📝 Lamar Pekerjaan</button>
+        <?php elseif ($sudahMelamar): ?>
             <div class="warning-message">⚠️ Anda sudah pernah melamar LOWONGAN ini.</div>
         <?php else: ?>
-            <button class="apply-btn" onclick="window.location.href='form_lamaran.php?id=<?= $lowongan['id'] ?>'">
-                📝 Lamar Pekerjaan
-            </button>
+            <button class="apply-btn" onclick="window.location.href='form_lamaran.php?id=<?= $lowongan['id'] ?>'">📝 Lamar Pekerjaan</button>
         <?php endif; ?>
     </div>
 
@@ -87,7 +92,7 @@ $sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
 
         <div class="company-card">
             <div class="company-header">
-                <img src="Gambar/<?= $lowongan['logo'] ?>" alt="Logo" class="company-logo">
+                <img src="Gambar/<?= htmlspecialchars($lowongan['logo']) ?>" alt="Logo" class="company-logo">
                 <h2><?= htmlspecialchars($lowongan['nama_perusahaan']) ?></h2>
             </div>
             <div class="company-info">
@@ -95,7 +100,7 @@ $sudahMelamar = mysqli_num_rows($cekLamaran) > 0;
                 <p>🏢 Industri: Tidak ditentukan</p>
                 <p>👥 Skala: Tidak ditentukan</p>
             </div>
-            <p class="company-desc">Deskripsi perusahaan dapat ditambahkan di database jika ingin lebih lengkap.</p>
+            <p class="company-desc"><?= nl2br(htmlspecialchars($lowongan['company_desc'])) ?></p>
         </div>
     </div>
 

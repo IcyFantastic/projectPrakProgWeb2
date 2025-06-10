@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $deskripsi = $_POST['deskripsi'];
     $keahlian = $_POST['keahlian'];
     $kualifikasi = $_POST['kualifikasi'];
+    $tanggal_batas = $_POST['tanggal_batas']; // Ambil tanggal batas pelamaran dari form
 
     $update = mysqli_query($conn, "UPDATE lowongan SET 
         judul = '$judul',
@@ -49,7 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         gaji = '$gaji',
         deskripsi = '$deskripsi',
         keahlian = '$keahlian',
-        kualifikasi = '$kualifikasi'
+        kualifikasi = '$kualifikasi',
+        tanggal_batas = '$tanggal_batas'
         WHERE id = $lowonganId AND perusahaan_id = $perusahaanId
     ");
 
@@ -120,6 +122,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <label>Kualifikasi</label>
         <textarea name="kualifikasi" rows="4" required><?= htmlspecialchars($lowongan['kualifikasi']) ?></textarea>
+
+        <label>Tanggal Batas Pelamaran</label>
+        <input type="date" name="tanggal_batas" value="<?= htmlspecialchars($lowongan['tanggal_batas']) ?>" required>
 
         <button type="submit" class="tombol-lamaran">Update Lowongan</button>
     </form>

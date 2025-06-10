@@ -14,6 +14,20 @@ $getPerusahaan = mysqli_query($conn, "SELECT * FROM perusahaan WHERE user_id = $
 $perusahaan = mysqli_fetch_assoc($getPerusahaan);
 $perusahaanId = $perusahaan['id'];
 
+// Proses penghapusan lowongan
+if (isset($_GET['delete_id'])) {
+    $deleteId = intval($_GET['delete_id']);
+    $deleteQuery = mysqli_query($conn, "DELETE FROM lowongan WHERE id = $deleteId AND perusahaan_id = $perusahaanId");
+
+    if ($deleteQuery) {
+        echo "<script>alert('✅ Lowongan berhasil dihapus!'); window.location='dashboard_perusahaan.php';</script>";
+        exit();
+    } else {
+        echo "<script>alert('❌ Gagal menghapus lowongan!'); window.location='dashboard_perusahaan.php';</script>";
+        exit();
+    }
+}
+
 // Ambil daftar lowongan milik perusahaan
 $lowongan = mysqli_query($conn, "
     SELECT l.*, 
@@ -77,7 +91,7 @@ $lowongan = mysqli_query($conn, "
                         </div>
                         <div class="action-buttons">
                             <a href="edit_lowongan.php?id=<?= $row['id'] ?>" class="btn edit">✏ Edit</a>
-                            <a href="hapus_lowongan.php?id=<?= $row['id'] ?>" class="btn delete" onclick="return confirm('Yakin ingin menghapus lowongan ini?')">🗑 Hapus</a>
+                            <a href="dashboard_perusahaan.php?delete_id=<?= $row['id'] ?>" class="btn delete" onclick="return confirm('Yakin ingin menghapus lowongan ini?')">🗑 Hapus</a>
                             <a href="lihat_pelamar.php?id=<?= $row['id'] ?>" class="btn view">👀 Lihat Pelamar</a>
                         </div>
                     </div>

@@ -24,10 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $deskripsi = $_POST['deskripsi'];
     $keahlian = $_POST['keahlian'];
     $kualifikasi = $_POST['kualifikasi'];
+    $tanggal_batas = $_POST['tanggal_batas']; // Ambil tanggal batas pelamaran dari form
 
     $insert = mysqli_query($conn, "INSERT INTO lowongan 
-        (perusahaan_id, judul, lokasi, jenis_pekerjaan, level_pekerjaan, pendidikan, gaji, deskripsi, keahlian, kualifikasi, tanggal_posting) 
-        VALUES ('$perusahaanId', '$judul', '$lokasi', '$jenis', '$level', '$pendidikan', '$gaji', '$deskripsi', '$keahlian', '$kualifikasi', CURDATE())");
+        (perusahaan_id, judul, lokasi, jenis_pekerjaan, level_pekerjaan, pendidikan, gaji, deskripsi, keahlian, kualifikasi, tanggal_posting, tanggal_batas) 
+        VALUES ('$perusahaanId', '$judul', '$lokasi', '$jenis', '$level', '$pendidikan', '$gaji', '$deskripsi', '$keahlian', '$kualifikasi', CURDATE(), '$tanggal_batas')");
 
     if ($insert) {
         echo "<script>alert('✅ Lowongan berhasil ditambahkan!'); window.location='dashboard_perusahaan.php';</script>";
@@ -96,6 +97,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <label>Kualifikasi</label>
         <textarea name="kualifikasi" rows="4" required></textarea>
+
+        <label>Tanggal Batas Pelamaran</label>
+        <input type="date" name="tanggal_batas" required>
 
         <button type="submit" class="tombol-lamaran">Simpan Lowongan</button>
     </form>

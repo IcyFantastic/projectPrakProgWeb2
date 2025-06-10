@@ -1,10 +1,4 @@
 <?php
-session_start();
-// Periksa apakah pengguna sudah login dan memiliki peran sebagai pelamar
-if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'pelamar') {
-    header("Location: login.php");
-    exit();
-}
 require 'koneksi.php';
 
 // Ambil kata kunci pencarian dari URL

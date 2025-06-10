@@ -22,12 +22,14 @@ if (isset($_SESSION['role'])) {
             <div class="logo-text">InfoLoker</div>
         </div>
         <nav class="nav-links">
-            <a href="<?= $homeUrl ?>">Home</a>
+            <a href="<?= isset($_SESSION['username']) ? ($homeUrl) : $baseUrl . 'dashboard_awal.php' ?>">Home</a>
             <a href="<?= $baseUrl ?>about.php">Tentang</a>
             <a href="<?= $baseUrl ?>vision.php">Visi & Misi</a>
             <a href="<?= $baseUrl ?>contact.php">Contact</a>
             <?php if (isset($_SESSION['username'])): ?>
                 <a href="<?= $baseUrl ?>logout.php" class="logout-btn">Logout</a>
+            <?php else: ?>
+                <a href="<?= $baseUrl ?>login.php" class="login-btn">Login</a>
             <?php endif; ?>
         </nav>
     </div>
@@ -35,107 +37,122 @@ if (isset($_SESSION['role'])) {
 
 <style>
     /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 100;
-            animation: slideDown 0.8s ease-out;
-            transition: all 0.3s ease;
-        }
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 1rem 2rem;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 100;
+        animation: slideDown 0.8s ease-out;
+        transition: all 0.3s ease;
+    }
 
-        header:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
+    header:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-        @keyframes slideDown {
-            0% { transform: translateY(-100%); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
+    @keyframes slideDown {
+        0% { transform: translateY(-100%); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
 
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
+    .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
 
-        .logo {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #ffffff, #f8fafc);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            font-weight: 700;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
+    .logo {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #ffffff, #f8fafc);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-color);
+        font-weight: 700;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+    }
 
-        .logo:hover {
-            transform: rotate(5deg) scale(1.05);
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
-        }
+    .logo:hover {
+        transform: rotate(5deg) scale(1.05);
+        box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+    }
 
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-        }
+    .logo-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+    }
 
-        .logo-text:hover {
-            transform: translateY(-1px);
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        }
+    .logo-text:hover {
+        transform: translateY(-1px);
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2.5rem;
-        }
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 2.5rem;
+    }
 
-        .nav-links a {
-            text-decoration: none;
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
+    .nav-links a {
+        text-decoration: none;
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
 
-        .nav-links a.logout-btn {
-            background: #ef4444;
-            color: #ffffff;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-        }
+    .nav-links a.logout-btn {
+        background: #ef4444;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
 
-        .nav-links a.logout-btn:hover {
-            background: #dc2626;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
-        }
+    .nav-links a.logout-btn:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+    }
+
+    .nav-links a.login-btn {
+        background: #3b82f6; /* Biru */
+        color: #ffffff;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-links a.login-btn:hover {
+        background: #2563eb; /* Biru lebih gelap */
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 255, 0.3);
+    }
 </style>
