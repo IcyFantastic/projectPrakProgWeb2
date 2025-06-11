@@ -50,12 +50,17 @@ if ($userId) {
 </head>
 <body>
 
-<?php include 'header.php'; ?>
+
 
 <div class="container">
-    <nav class="breadcrumb">
-        <a href="dashboard_pelamar.php">Home</a> / <a href="#">Detail Lowongan</a>
-    </nav>
+    <?php include 'header.php'; ?>
+
+  
+    
+
+
+
+    
     <div class="job-header">
         <h1><?= htmlspecialchars($lowongan['judul']) ?></h1>
         <p class="company-name">🏢 <a href="#"><?= htmlspecialchars($lowongan['nama_perusahaan']) ?></a></p>

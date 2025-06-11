@@ -19,26 +19,13 @@ body {
     min-height: 100vh;
 }
 
-/* Breadcrumb */
-.breadcrumb {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    position: sticky;
-    top: 60px;
-    z-index: 999;
-    width: 100%;
-}
 
-.breadcrumb a {
-    color: var(--white);
-    text-decoration: none;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-}
 
-.breadcrumb a:hover {
-    opacity: 1;
+
+.main-content {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
 }
 
 /* Container */
