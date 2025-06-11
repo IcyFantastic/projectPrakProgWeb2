@@ -54,12 +54,6 @@ if ($userId) {
 
 <div class="container">
     <?php include 'header.php'; ?>
-
-  
-    
-
-
-
     
     <div class="job-header">
         <h1><?= htmlspecialchars($lowongan['judul']) ?></h1>
